@@ -1,73 +1,68 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1020"><title>Boxing Fit 3D — Visual 4.0</title><style>*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#f5f7ff;font-family:system-ui,-apple-system,sans-serif}header{padding:15px 17px 8px;display:flex;align-items:center;justify-content:space-between}h1{font-size:20px;margin:0}small,.sub{color:#9db1ca}.pill{font-size:11px;border:1px solid #3e6274;color:#9ae7c6;border-radius:20px;padding:7px 10px}.stage{height:min(57dvh,570px);min-height:310px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#223d5d,#0b1020 75%)}canvas{display:block;width:100%;height:100%;touch-action:none}.overlay{position:absolute;top:12px;left:17px;pointer-events:none}.overlay b{font-size:22px}.overlay p{margin:4px 0;font-size:13px;color:#afc3d8}.counter{color:#ffcc68;font-weight:800}.hint{position:absolute;bottom:12px;left:0;right:0;text-align:center;color:#9cb0c8;font-size:12px;pointer-events:none}.panel{background:#162239;border-radius:22px 22px 0 0;padding:16px 16px calc(22px + env(safe-area-inset-bottom))}.moves{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}button{cursor:pointer;border:1px solid #415672;background:#253851;color:white;border-radius:12px;padding:12px 4px;font-weight:700;font-size:13px}.moves button.active{background:#ffca56;color:#182130;border-color:#ffca56}.tools{display:flex;align-items:center;gap:10px;margin-top:13px}.tools label{font-size:12px;white-space:nowrap;color:#b9cce1}.tools input{flex:1;min-width:0;accent-color:#ffca56}.tools button{padding:10px 12px}.tip{font-size:12px;line-height:1.5;color:#aabed4;margin:12px 0 0}.error{padding:25px;color:#ffd29b}</style></head><body><header><div><h1>🥊 Boxing Fit <span style="color:#ffca56">3D</span></h1><small>Movimento 3.0 · protótipo iPhone</small></div><span class="pill">DEMO</span></header><main><div id="stage" class="stage"><div class="overlay"><b id="title">Jab</b><p id="desc">Mão da frente · rotação curta do ombro</p><span id="count" class="counter">0 golpes</span></div><div class="hint">Arraste para girar · toque nos golpes abaixo</div></div><section class="panel"><div class="moves" id="moves"><button class="active" data-move="jab">Jab</button><button data-move="cross">Direto</button><button data-move="hook">Cruzado</button><button data-move="upper">Uppercut</button><button data-move="slip">Esquiva</button><button data-move="combo">Combo 1–2</button></div><div class="tools"><label>Velocidade</label><input id="speed" type="range" min="0.55" max="1.5" step="0.05" value="0.85"><button id="pause">Pausar</button><button id="reset">Frente</button></div><p class="tip">Versão 3.0: corrigida a posição dos ombros e a anatomia dos braços. Direto com extensão da mão de trás e giro do pé; cruzado em arco horizontal com cotovelo elevado; uppercut com impulso das pernas e trajetória ascendente. Visual 4.0 · Treinador estilizado, animação procedural.</p></section></main><script type="module">
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090c12"><title>Boxing Fit — Treinador 3D | Rocky</title><style>
+*{box-sizing:border-box}body{margin:0;background:#090c12;color:#f4f3ef;font:15px -apple-system,BlinkMacSystemFont,system-ui,sans-serif}header{padding:17px 17px 12px;display:flex;align-items:center;justify-content:space-between;background:#10151c}h1{font-size:21px;letter-spacing:-.7px;margin:0}h1 em{font-style:normal;color:#ed4c43}.sub{font-size:12px;color:#a7a9b0;margin-top:4px}.tag{font-size:11px;border:1px solid #704d4c;color:#ffb1a9;border-radius:18px;padding:7px 10px}.stage{height:min(58dvh,620px);min-height:345px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#31343b,#101318 72%)}canvas{width:100%;height:100%;display:block;touch-action:none}.hud{position:absolute;top:16px;left:18px;pointer-events:none}.hud strong{font-size:25px}.hud p{font-size:13px;color:#d0d0d0;margin:4px 0}.hud span{font-size:12px;color:#ffb1a9}.hint{position:absolute;bottom:13px;width:100%;text-align:center;color:#c2c3c7;font-size:12px;pointer-events:none}.panel{background:#141a23;padding:18px 16px calc(24px + env(safe-area-inset-bottom));border-radius:20px 20px 0 0;position:relative;margin-top:-4px}.moves{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}button{font:700 13px system-ui;background:#252f3d;border:1px solid #3b4857;color:white;border-radius:12px;padding:14px 4px;min-height:48px}button.active{background:#d84239;border-color:#ff776c}.toolbar{display:flex;align-items:center;gap:10px;margin-top:15px}.toolbar label{font-size:12px;color:#c6c6c6}.toolbar input{min-width:0;flex:1;accent-color:#ed4c43}.toolbar button{padding:10px}.notice{color:#aeb4be;font-size:12px;line-height:1.55;margin-top:13px}.error{padding:20px;color:#ffb6ae}</style></head><body>
+<header><div><h1>🥊 BOXING <em>FIT</em> 3D</h1><div class="sub">Treinador inspirado no boxe clássico</div></div><span class="tag">PROTÓTIPO</span></header>
+<main><div class="stage" id="stage"><div class="hud"><strong id="name">Jab</strong><p id="desc">Mão da frente · guarda alta</p><span id="count">0 repetições</span></div><div class="hint">Arraste para girar o treinador</div></div><section class="panel"><div class="moves">
+<button class="active" data-move="jab">Jab</button><button data-move="cross">Direto</button><button data-move="hook">Cruzado</button><button data-move="upper">Uppercut</button><button data-move="slip">Esquiva</button><button data-move="combo">Combo 1–2</button>
+</div><div class="toolbar"><label>Velocidade</label><input id="speed" type="range" min=".5" max="1.3" value=".8" step=".1"><button id="pause">Pausar</button><button id="front">Frente</button></div><div class="notice">Visual inspirado no treinamento de Rocky: luvas vermelhas, shorts clássicos e ringue. Personagem original, sem reproduzir o rosto de um ator. Modelo 3D procedural com anatomia melhorada; não é captura profissional de movimento.</div></section></main>
+<script type="module">
 import * as T from 'https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js';
-const stage=document.querySelector('#stage'),scene=new T.Scene();scene.fog=new T.Fog(0x0b1020,8,19);const camera=new T.PerspectiveCamera(36,1,.1,50);camera.position.set(0,2.05,7.2);camera.lookAt(0,1.65,0);const renderer=new T.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.outputColorSpace=T.SRGBColorSpace;renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFSoftShadowMap;stage.prepend(renderer.domElement);scene.add(new T.HemisphereLight(0xd7edff,0x233049,2.2));const sun=new T.DirectionalLight(0xffffff,3.2);sun.position.set(-3,7,5);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.camera.left=-5;sun.shadow.camera.right=5;sun.shadow.camera.top=6;sun.shadow.camera.bottom=-5;scene.add(sun);const rim=new T.DirectionalLight(0x61caff,2);rim.position.set(3,4,-3);scene.add(rim);
-const mat=(c,metal=0)=>new T.MeshStandardMaterial({color:c,roughness:.67,metalness:metal});const skin=mat(0xa96d4e),shirt=mat(0x102a42),shorts=mat(0x121c31),glove=mat(0xf1a72f,.12),shoe=mat(0xe9f1fc),dark=mat(0x101520),white=mat(0xffffff),stripe=mat(0x39d3d6),hair=mat(0x17141a),trim=mat(0xf5c45a,.2),seam=mat(0x284a60),eye=mat(0x241d1a),mouth=mat(0x643e34);const sph=new T.SphereGeometry(1,18,14),cy=new T.CylinderGeometry(1,1,1,12);
-function orb(parent,m,x,y,z,sx,sy,sz){let o=new T.Mesh(sph,m);o.position.set(x,y,z);o.scale.set(sx,sy,sz);o.castShadow=true;parent.add(o);return o}function seg(parent,m,r){const o=new T.Mesh(cy,m);o.castShadow=true;parent.add(o);o.userData.r=r;return o}function setSeg(o,a,b,r){const v=new T.Vector3().subVectors(b,a);o.position.copy(a).addScaledVector(v,.5);o.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),v.clone().normalize());o.scale.set(r,v.length(),r)}const floor=new T.Mesh(new T.CircleGeometry(5,72),mat(0x132438));floor.rotation.x=-Math.PI/2;floor.position.y=-.015;floor.receiveShadow=true;scene.add(floor);for(const rr of [1.2,2.15,3.25]){const ring=new T.Mesh(new T.RingGeometry(rr,rr+.018,96),mat(0x274c62));ring.rotation.x=-Math.PI/2;ring.position.y=.005;scene.add(ring)}
-const root=new T.Group();scene.add(root);const pelvis=new T.Group();root.add(pelvis);const torso=new T.Group();pelvis.add(torso);
-// Boxing shorts with waistband, panels and contrast trim.
-orb(pelvis,shorts,0,1.17,0,.37,.25,.27);
-orb(pelvis,trim,0,1.32,.015,.365,.045,.27);
-for(const side of [-1,1]){orb(pelvis,seam,side*.30,1.13,.08,.065,.18,.21);orb(pelvis,trim,side*.30,1.03,.10,.058,.022,.19)}
-// Athletic torso with layered uniform, chest panel and neckline.
-orb(torso,shirt,0,.43,0,.45,.61,.27);orb(torso,shirt,0,.80,0,.53,.22,.29);
-orb(torso,seam,0,.55,.255,.24,.27,.018);
-orb(torso,stripe,0,.57,.275,.055,.24,.015);
-orb(torso,dark,0,1.01,.05,.17,.085,.15);
-orb(torso,skin,0,1.03,0,.135,.16,.13);
-// Character head: ears, nose, eyes, brows, hairline and short beard.
-const head=new T.Group();torso.add(head);head.position.y=1.23;
-orb(head,skin,0,.13,0,.235,.285,.23);
-for(const side of [-1,1]){orb(head,skin,side*.225,.12,.005,.053,.095,.06);orb(head,hair,side*.104,.355,.00,.12,.055,.17);orb(head,eye,side*.093,.167,.217,.020,.016,.010);orb(head,hair,side*.095,.210,.219,.057,.014,.014)}
-orb(head,hair,0,.355,-.025,.232,.102,.236);orb(head,hair,0,.317,.145,.20,.05,.105);
-orb(head,skin,0,.097,.238,.052,.078,.065);
-orb(head,mouth,0,.016,.225,.075,.018,.018);
-orb(head,hair,0,-.052,.135,.14,.038,.095);
-// Gloves have a contrasting cuff and knuckle panel.
-const arms=[-1,1].map(side=>{const group=new T.Group();torso.add(group);const upper=seg(group,skin),lower=seg(group,skin),elbow=orb(group,skin,0,0,0,.105,.105,.105),hand=orb(group,glove,0,0,0,.165,.172,.185),cuff=orb(group,dark,0,0,0,.14,.09,.14),badge=orb(hand,trim,0,.20,.76,.34,.09,.07);return {s:side,group,upper,lower,elbow,hand,cuff,badge}});
-// Longer boxing boots and socks, with color blocking.
-const legs=[-1,1].map(side=>{const g=new T.Group();root.add(g);const thigh=seg(g,shorts),shin=seg(g,skin),knee=orb(g,skin,0,0,0,.14,.13,.14),foot=orb(g,shoe,0,0,0,.18,.13,.31),sole=orb(foot,dark,0,-.73,.0,.96,.13,.96),toe=orb(foot,trim,0,.14,.63,.66,.20,.22);return {s:side,thigh,shin,knee,foot,sole,toe}});
-function clamp(v,a,b){return Math.max(a,Math.min(b,v))}function smooth(v){v=clamp(v,0,1);return v*v*(3-2*v)}function lerp(a,b,t){return a+(b-a)*t}function mix(a,b,t){return a.clone().lerp(b,t)}const V=(x,y,z)=>new T.Vector3(x,y,z);function solve(shoulder,target,s,upper=.48,lower=.48){let d=target.clone().sub(shoulder),dist=clamp(d.length(),.08,upper+lower-.025),dir=d.clone().normalize(),mid=dist*.5,h=Math.sqrt(Math.max(0,upper*upper-mid*mid));let sideways=V(s*.75,-.22,.18);sideways.addScaledVector(dir,-sideways.dot(dir)).normalize();return shoulder.clone().addScaledVector(dir,mid).addScaledVector(sideways,h)}
-let move='jab',speed=.85,paused=false,elapsed=0,last=0,count=0,yaw=0,drag=false,lastX=0;const titles={jab:['Jab','Mão da frente · extensão e retorno'],cross:['Direto','Mão de trás · giro do quadril'],hook:['Cruzado','Cotovelo alto · golpe em arco'],upper:['Uppercut','Flexão de joelhos · golpe ascendente'],slip:['Esquiva','Cabeça fora da linha · guarda alta'],combo:['Combo 1–2','Jab seguido de direto']};const cycle={jab:1.6,cross:1.75,hook:1.8,upper:1.9,slip:1.6,combo:2.65};function pulse(t,a,b,c,d){return smooth((t-a)/(b-a))*(1-smooth((t-c)/(d-c)))}function strike(t,kind){const p=kind==='jab'?[.12,.38,.51,.88]:kind==='cross'?[.18,.49,.64,1.04]:kind==='hook'?[.18,.52,.69,1.08]:[.22,.56,.74,1.15];return pulse(t,...p)}function animate(t){const C=cycle[move],local=t%C;let j=0,c=0,h=0,u=0,sl=0;if(move==='jab')j=strike(local,'jab');if(move==='cross')c=strike(local,'cross');if(move==='hook')h=strike(local,'hook');if(move==='upper')u=strike(local,'upper');if(move==='slip')sl=pulse(local,.15,.5,.79,1.17);if(move==='combo'){j=strike(local,'jab');c=strike(local-1.05,'cross')}const action=Math.max(j,c,h,u,sl);const bob=Math.sin(t*4)*.012;root.position.y=bob-.055*sl-.045*u;root.rotation.y=.10+ .08*j-.30*c+.37*h-.16*u;pelvis.rotation.y=.03*j-.28*c+.28*h-.13*u;pelvis.position.x=.025*j-.07*c+.07*h+.16*sl;torso.rotation.z=-.14*sl+.055*h+.035*u;torso.rotation.y=.04*j-.18*c+.23*h-.08*u;torso.position.y=.055*u;head.rotation.z=.12*sl;head.rotation.y=-.07*sl;
-// Ombros posicionados no tórax (antes estavam incorretamente acima da cabeça).
-const shoulderL=V(-.43,.81,.02),shoulderR=V(.43,.81,.02);
-const guardL=V(-.25,1.18,.38),guardR=V(.25,1.18,.38);
-const left=guardL.clone(),right=guardR.clone();
-// Direto: mão traseira sai da mandíbula, avança em linha reta até a altura do rosto.
-// Cruzado: arco curto horizontal com cotovelo elevado e punho na altura da mandíbula.
-// Uppercut: mão baixa perto do corpo, sobe verticalmente com cotovelo fechado.
-left.lerp(V(-.19,1.25,1.20),j);
-right.lerp(V(.13,1.24,1.22),c);
-left.lerp(V(.15,1.15,.86),h);
-left.lerp(V(-.17,1.06,.75),u);
-left.x+=.07*sl;right.x+=.07*sl;
-const hookElbow=V(-.74,1.14,.57);
-const upperElbow=V(-.38,.72,.40);
-for(const a of arms){
-  const shoulder=a.s===-1?shoulderL:shoulderR,hand=a.s===-1?left:right;
-  let elbow=solve(shoulder,hand,a.s,.49,.49);
-  if(a.s===-1&&h>.001)elbow.lerp(hookElbow,h);
-  if(a.s===-1&&u>.001)elbow.lerp(upperElbow,u);
-  setSeg(a.upper,shoulder,elbow,.125);
-  setSeg(a.lower,elbow,hand,.104);
-  a.elbow.position.copy(elbow);
-  a.hand.position.copy(hand);
-  a.cuff.position.copy(mix(elbow,hand,.84));
-  a.hand.rotation.set(-.18*u,.15*h,0);
-}
-// Pernas: rotação do pé traseiro no direto, flexão e extensão no uppercut.
-for(const l of legs){
-  const s=l.s;
-  let hip=V(s*.23,1.13,0),knee=V(s*.27,.63,s===-1?.20:-.15),ankle=V(s*.30,.14,s===-1?.34:-.30);
-  if(s===-1){knee.x+=.03*j+.04*h;ankle.z+=.05*j}
-  else{knee.x-=.10*c;ankle.z+=.13*c}
-  knee.y-=.09*u+.055*sl;
-  setSeg(l.thigh,hip,knee,.17);setSeg(l.shin,knee,ankle,.12);
-  l.knee.position.copy(knee);
-  l.foot.position.set(ankle.x,.10,ankle.z+.10);
-  l.foot.rotation.y=s===1?-.34*c:.13*h;
-}
-
-const n=Math.floor(t/C);if(n>count){count=n;document.querySelector('#count').textContent=`${count} ${move==='slip'?'repetições':'sequências'}`}}
-function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}window.addEventListener('resize',resize);resize();function frame(ms){requestAnimationFrame(frame);const dt=last?Math.min(.05,(ms-last)/1000):0;last=ms;if(!paused)elapsed+=dt*speed;animate(elapsed);root.rotation.y+=yaw;renderer.render(scene,camera);root.rotation.y-=yaw}requestAnimationFrame(frame);
-document.querySelectorAll('[data-move]').forEach(b=>b.addEventListener('click',()=>{document.querySelector('.active')?.classList.remove('active');b.classList.add('active');move=b.dataset.move;elapsed=0;count=0;document.querySelector('#count').textContent='0 golpes';document.querySelector('#title').textContent=titles[move][0];document.querySelector('#desc').textContent=titles[move][1]}));document.querySelector('#speed').addEventListener('input',e=>speed=Number(e.target.value));document.querySelector('#pause').addEventListener('click',e=>{paused=!paused;e.target.textContent=paused?'Continuar':'Pausar'});document.querySelector('#reset').addEventListener('click',()=>yaw=0);stage.addEventListener('pointerdown',e=>{drag=true;lastX=e.clientX;stage.setPointerCapture(e.pointerId)});stage.addEventListener('pointermove',e=>{if(drag){yaw+=clamp((e.clientX-lastX)*.008,-.25,.25);lastX=e.clientX}});stage.addEventListener('pointerup',()=>drag=false);stage.addEventListener('pointercancel',()=>drag=false);
+const stage=document.getElementById('stage'),scene=new T.Scene();scene.background=new T.Color(0x141820);scene.fog=new T.Fog(0x141820,10,22);
+const camera=new T.PerspectiveCamera(33,1,.1,100);camera.position.set(0,2.15,8.6);camera.lookAt(0,1.62,0);
+const renderer=new T.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=T.SRGBColorSpace;renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFSoftShadowMap;stage.prepend(renderer.domElement);
+scene.add(new T.HemisphereLight(0xd6e6ff,0x28202a,2));const key=new T.DirectionalLight(0xffe7d5,3.6);key.position.set(-3,7,5);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-5;key.shadow.camera.right=5;key.shadow.camera.top=6;key.shadow.camera.bottom=-5;scene.add(key);const rim=new T.DirectionalLight(0x7ba7d9,2.3);rim.position.set(3,4,-4);scene.add(rim);
+const mat=(color,roughness=.77,metalness=0)=>new T.MeshStandardMaterial({color,roughness,metalness});
+const skin=mat(0xb87e5e),skinShade=mat(0x966448),hair=mat(0x17171a),beard=mat(0x29201e),eyes=mat(0x18191b),whites=mat(0xe7dfd3),red=mat(0xb71f27,.44),redLight=mat(0xe23c3d,.5),gold=mat(0xd5b77a,.4),shorts=mat(0x22262d),trim=mat(0xe2e1d9),canvasMat=mat(0x2a313a),rope=mat(0xb23c3a),metal=mat(0x565d68,.32,.45);
+const sphere=new T.SphereGeometry(1,28,20),cylinder=new T.CylinderGeometry(1,1,1,20);
+function ell(p,m,x,y,z,sx,sy,sz){const o=new T.Mesh(sphere,m);o.position.set(x,y,z);o.scale.set(sx,sy,sz);o.castShadow=true;o.receiveShadow=true;p.add(o);return o}
+function rod(p,m){const o=new T.Mesh(cylinder,m);o.castShadow=true;p.add(o);return o}
+function bone(o,a,b,r1,r2){const delta=b.clone().sub(a),length=delta.length();o.position.copy(a).addScaledVector(delta,.5);o.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),delta.normalize());o.scale.set(r1,length,r2)}
+const V=(x,y,z)=>new T.Vector3(x,y,z),mix=(a,b,t)=>a.clone().lerp(b,t),clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),smooth=t=>{t=clamp(t,0,1);return t*t*(3-2*t)},pulse=(t,a,b,c,d)=>smooth((t-a)/(b-a))*(1-smooth((t-c)/(d-c)));
+const floor=new T.Mesh(new T.PlaneGeometry(40,40),canvasMat);floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
+for(const z of [-3.7,3.7])for(const x of [-3.7,3.7]){const post=rod(scene,metal);bone(post,V(x,0,z),V(x,2.3,z),.065,.065)}
+for(const y of [1.02,1.44,1.88])for(const z of [-3.7,3.7]){const r=rod(scene,rope);bone(r,V(-3.7,y,z),V(3.7,y,z),.025,.025)}
+const root=new T.Group();scene.add(root);root.rotation.y=-.12;const hips=new T.Group();root.add(hips);const upperBody=new T.Group();hips.add(upperBody);
+// Feet and leg proportions, human-sized.
+ell(hips,shorts,0,1.25,0,.37,.28,.26);ell(hips,gold,0,1.43,.005,.36,.045,.25);
+for(const s of [-1,1]){ell(hips,shorts,s*.235,1.15,.02,.185,.24,.22);ell(hips,trim,s*.235,.97,.025,.183,.038,.22)}
+// Shoulder line at 2.38; neck at 2.53; head 2.83.
+ell(upperBody,skin,0,1.94,0,.39,.52,.26);
+ell(upperBody,skin,0,2.24,.015,.54,.24,.29);
+ell(upperBody,skinShade,0,1.75,.252,.06,.34,.012);
+for(const s of [-1,1]){ell(upperBody,skin,s*.23,2.16,.22,.22,.17,.12);ell(upperBody,skin,s*.15,1.77,.238,.105,.28,.035)}
+ell(upperBody,skin,0,2.49,0,.145,.17,.14);
+const head=new T.Group();upperBody.add(head);head.position.set(0,2.79,0);
+ell(head,skin,0,0,0,.245,.305,.235);ell(head,skin,0,-.16,.095,.18,.11,.16);
+for(const s of [-1,1]){ell(head,skin,s*.24,-.02,0,.055,.09,.07);ell(head,whites,s*.092,.06,.216,.050,.027,.013);ell(head,eyes,s*.092,.058,.228,.021,.020,.009);ell(head,beard,s*.095,.116,.213,.077,.020,.017)}
+ell(head,skin,0,-.032,.249,.064,.10,.068);ell(head,beard,0,-.187,.115,.17,.06,.15);
+ell(head,hair,0,.232,-.025,.245,.095,.23);ell(head,hair,0,.206,.14,.20,.055,.09);
+// Gloves: compact, attached to wrists; no separate floating decorations.
+const arms=[-1,1].map(s=>{const upper=rod(upperBody,skin),fore=rod(upperBody,skin),elbow=ell(upperBody,skin,0,0,0,.123,.123,.123),glove=ell(upperBody,red,0,0,0,.18,.195,.19),cuff=ell(upperBody,redLight,0,0,0,.145,.105,.15),thumb=ell(glove,redLight,s*.56,-.25,.38,.35,.48,.35);return{s,upper,fore,elbow,glove,cuff}});
+const legs=[-1,1].map(s=>{const thigh=rod(root,skin),shin=rod(root,skin),knee=ell(root,skin,0,0,0,.17,.16,.17),foot=ell(root,skin,0,0,0,.17,.115,.29);return{s,thigh,shin,knee,foot}});
+function elbowFor(a,b,s,upper=.48,fore=.46){const dir=b.clone().sub(a),distance=clamp(dir.length(),.04,upper+fore-.02),axis=dir.normalize();let normal=V(s*.8,-.38,.35);normal.addScaledVector(axis,-normal.dot(axis)).normalize();const offset=Math.sqrt(Math.max(0,upper*upper-(distance*.5)**2));return a.clone().addScaledVector(axis,distance*.5).addScaledVector(normal,offset)}
+let current='jab',speed=.8,paused=false,t=0,last=0,count=0,yaw=0,dragging=false,px=0;
+const labels={jab:['Jab','Mão da frente · guarda alta'],cross:['Direto','Mão de trás · giro do quadril'],hook:['Cruzado','Arco horizontal · cotovelo elevado'],upper:['Uppercut','Trajetória curta e ascendente'],slip:['Esquiva','Cabeça fora da linha de ataque'],combo:['Combo 1–2','Jab seguido de direto']},duration={jab:1.6,cross:1.75,hook:1.85,upper:1.85,slip:1.6,combo:2.75};
+function animate(time){const cycle=duration[current],q=time%cycle;let j=0,c=0,h=0,u=0,sl=0;if(current==='jab')j=pulse(q,.15,.38,.52,.89);if(current==='cross')c=pulse(q,.16,.44,.62,1.05);if(current==='hook')h=pulse(q,.2,.49,.70,1.12);if(current==='upper')u=pulse(q,.2,.49,.73,1.13);if(current==='slip')sl=pulse(q,.15,.42,.79,1.12);if(current==='combo'){j=pulse(q,.12,.35,.5,.80);c=pulse(q,1.08,1.39,1.58,1.96)}
+const bob=Math.sin(time*4)*.009;root.position.y=bob-.06*sl-.05*u;
+hips.rotation.y=-.10*c+.16*h+.07*j;hips.position.x=.08*sl+.03*h-.03*c;
+upperBody.rotation.y=-.18*c+.18*h+.07*j;upperBody.rotation.z=-.16*sl+.06*h;upperBody.position.y=.04*u;
+head.rotation.z=.14*sl;head.rotation.y=-.07*sl;
+// All arm coordinates share the same torso-local coordinate system.
+const shoulders=[V(-.51,2.32,.015),V(.51,2.32,.015)];
+const guard=[V(-.26,2.42,.46),V(.26,2.42,.46)];
+const hands=[guard[0].clone(),guard[1].clone()];
+hands[0].lerp(V(-.24,2.46,1.29),j);
+hands[1].lerp(V(.20,2.46,1.32),c);
+hands[0].lerp(V(.12,2.38,.94),h);
+hands[0].lerp(V(-.14,2.27,.84),u);
+hands[0].x+=.07*sl;hands[1].x+=.07*sl;
+for(let i=0;i<2;i++){const a=arms[i],shoulder=shoulders[i],hand=hands[i];let e=elbowFor(shoulder,hand,a.s,.49,.47);
+if(i===0){e.lerp(V(-.63,2.34,.65),h);e.lerp(V(-.40,1.99,.46),u)}
+bone(a.upper,shoulder,e,.135,.135);bone(a.fore,e,hand,.113,.113);a.elbow.position.copy(e);a.glove.position.copy(hand);a.cuff.position.copy(mix(e,hand,.83));}
+for(const l of legs){const s=l.s,hip=V(s*.23,1.18,0),knee=V(s*.28,.68,s===-1?.21:-.15),ankle=V(s*.31,.14,s===-1?.39:-.33);knee.y-=.06*u+.05*sl;if(s===1){knee.x-=.05*c;ankle.z+=.08*c}bone(l.thigh,hip,knee,.18,.18);bone(l.shin,knee,ankle,.135,.135);l.knee.position.copy(knee);l.foot.position.set(ankle.x,.09,ankle.z+.12)}
+const n=Math.floor(time/cycle);if(n!==count){count=n;document.getElementById('count').textContent=n+' repetições'}}
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}window.addEventListener('resize',resize);resize();
+function frame(ms){requestAnimationFrame(frame);const dt=last?Math.min(.05,(ms-last)/1000):0;last=ms;if(!paused)t+=dt*speed;animate(t);root.rotation.y+=yaw;renderer.render(scene,camera);root.rotation.y-=yaw}requestAnimationFrame(frame);
+document.querySelectorAll('[data-move]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelector('.active')?.classList.remove('active');btn.classList.add('active');current=btn.dataset.move;t=0;count=0;document.getElementById('name').textContent=labels[current][0];document.getElementById('desc').textContent=labels[current][1];document.getElementById('count').textContent='0 repetições'}));
+document.getElementById('speed').addEventListener('input',e=>speed=Number(e.target.value));document.getElementById('pause').addEventListener('click',e=>{paused=!paused;e.target.textContent=paused?'Continuar':'Pausar'});document.getElementById('front').addEventListener('click',()=>yaw=0);
+stage.addEventListener('pointerdown',e=>{dragging=true;px=e.clientX;stage.setPointerCapture(e.pointerId)});stage.addEventListener('pointermove',e=>{if(dragging){yaw+=clamp((e.clientX-px)*.008,-.25,.25);px=e.clientX}});stage.addEventListener('pointerup',()=>dragging=false);stage.addEventListener('pointercancel',()=>dragging=false);
 </script></body></html>
