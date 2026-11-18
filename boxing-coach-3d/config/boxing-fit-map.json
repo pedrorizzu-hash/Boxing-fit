@@ -1,0 +1,184 @@
+{
+ "_info": "Mapa dos treinos do Boxing Fit para os movimentos do treinador 3D. 'byTitle' tem prioridade sobre 'byMove'. Cada valor é UMA repetição (lista de movimentos) ou {\"rotate\": [[...],[...]]} para alternar sequências. null = treinador na base (idle). Edite livremente.",
+ "trainingSpeed": 1,
+ "demoSpeed": 0.7,
+ "gapSeconds": 0.6,
+ "trainingCamera": "front",
+ "demoCamera": "three",
+ "byMove": {
+  "jab": [
+   "jab"
+  ],
+  "direct": [
+   "cross"
+  ],
+  "hook": [
+   "leftHook"
+  ],
+  "slip": [
+   "slipLeft",
+   "slipRight"
+  ],
+  "step": [
+   "stepForward",
+   "stepBack",
+   "stepLeft",
+   "stepRight"
+  ],
+  "march": null,
+  "squat": [
+   "rollLeft",
+   "rollRight"
+  ],
+  "combo": [
+   "jab",
+   "cross"
+  ],
+  "rest": null
+ },
+ "byTitle": {
+  "Base e guarda": [
+   "guard",
+   "stepForward",
+   "stepBack"
+  ],
+  "Jab técnico": [
+   "jab"
+  ],
+  "Direto com giro": [
+   "cross"
+  ],
+  "Jab–direto": [
+   "jab",
+   "cross"
+  ],
+  "Jab–direto–esquiva": [
+   "jab",
+   "cross",
+   "slipRight"
+  ],
+  "Combinação de 4 golpes": [
+   "jab",
+   "cross",
+   "leftHook",
+   "cross"
+  ],
+  "Passos com guarda": [
+   "stepForward",
+   "stepBack",
+   "stepLeft",
+   "stepRight"
+  ],
+  "Esquiva para os dois lados": [
+   "slipLeft",
+   "slipRight"
+  ],
+  "Jab e saída lateral": [
+   "jab",
+   "stepLeft"
+  ],
+  "Esquiva e direto": [
+   "slipRight",
+   "cross"
+  ],
+  "Defesa + contra-ataque": [
+   "slipLeft",
+   "slipRight",
+   "jab",
+   "cross"
+  ],
+  "Marcha ativa com guarda": null,
+  "Jab–direto contínuo": [
+   "jab",
+   "cross"
+  ],
+  "Passos laterais com golpes": [
+   "stepLeft",
+   "jab",
+   "stepRight",
+   "cross"
+  ],
+  "Agachamento controlado": [
+   "rollLeft",
+   "rollRight"
+  ],
+  "Sequência de 4 golpes": [
+   "jab",
+   "cross",
+   "leftHook",
+   "cross"
+  ],
+  "Boxe sombra em ritmo": {
+   "rotate": [
+    [
+     "jab",
+     "cross"
+    ],
+    [
+     "jab",
+     "cross",
+     "leftHook"
+    ],
+    [
+     "slipRight",
+     "cross",
+     "leftHook"
+    ],
+    [
+     "jab",
+     "rightUppercut",
+     "leftHook",
+     "cross"
+    ],
+    [
+     "jab",
+     "cross",
+     "rollRight",
+     "leftHook"
+    ]
+   ]
+  },
+  "Base e deslocamento": [
+   "stepForward",
+   "stepBack",
+   "stepLeft",
+   "stepRight"
+  ],
+  "Esquiva e recuperação de base": [
+   "slipLeft",
+   "recoverBalance",
+   "slipRight"
+  ],
+  "Jab–direto com giro": [
+   "jab",
+   "cross",
+   "pivotLeft"
+  ],
+  "Agachamento sem impacto": [
+   "rollLeft",
+   "rollRight"
+  ],
+  "Marcha forte e guarda": null,
+  "Combinação + saída lateral": [
+   "jab",
+   "cross",
+   "leftHook",
+   "stepLeft"
+  ],
+  "Recuperação ativa": null,
+  "Volta à calma": null,
+  "Aquecimento: mobilidade e base": [
+   "guard",
+   "stepForward",
+   "stepBack"
+  ],
+  "Aquecimento: golpes lentos": [
+   "jab",
+   "cross"
+  ]
+ },
+ "slowTitles": [
+  "Aquecimento: golpes lentos"
+ ],
+ "slowSpeed": 0.6
+}

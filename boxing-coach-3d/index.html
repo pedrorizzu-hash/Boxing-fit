@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0b0f16">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="data:,">
+<title>Boxing Fit · Treinador 3D</title>
+<style>
+:root{--bg:#0b0f16;--panel:#141b27;--line:#273246;--txt:#eef1f6;--mut:#9aa6b8;--acc:#ffc94e;--red:#e23c3d}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);font:15px -apple-system,BlinkMacSystemFont,system-ui,sans-serif;overscroll-behavior:none}
+body{display:flex;flex-direction:column;height:100dvh}
+#stage{position:relative;flex:1 1 auto;min-height:52vh;overflow:hidden;touch-action:none}
+#stage canvas{display:block;width:100%;height:100%}
+.hud{position:absolute;left:0;right:0;top:0;padding:max(12px,env(safe-area-inset-top)) 14px 0;pointer-events:none;display:flex;justify-content:space-between;align-items:flex-start}
+.brand{font-weight:900;letter-spacing:.08em;color:var(--acc);font-size:13px}
+.speedTag{font-size:12px;color:var(--mut);border:1px solid var(--line);border-radius:99px;padding:4px 9px;background:#0b0f16aa}
+.now{position:absolute;left:0;right:0;bottom:12px;text-align:center;pointer-events:none}
+.now .cur{display:inline-block;font-size:26px;font-weight:850;letter-spacing:-.02em;padding:6px 16px;border-radius:14px;background:#0b0f16b8;border:1px solid #ffffff1a;min-width:160px;transition:transform .12s}
+.now .cur.pulse{transform:scale(1.06);border-color:var(--acc)}
+.now .nxt{margin-top:6px;font-size:13px;color:var(--mut)}
+.now .nxt b{color:var(--txt)}
+.steps{display:flex;gap:5px;justify-content:center;margin-top:8px}
+.steps i{width:22px;height:5px;border-radius:3px;background:#ffffff26}
+.steps i.on{background:var(--acc)}.steps i.done{background:#ffc94e66}
+.camBtns{position:absolute;right:10px;top:calc(max(12px,env(safe-area-inset-top)) + 34px);display:flex;flex-direction:column;gap:6px}
+.camBtns button{pointer-events:auto;background:#0b0f16b8;color:var(--txt);border:1px solid var(--line);border-radius:10px;font-size:12px;padding:7px 9px}
+#loading{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg);z-index:5;text-align:center;padding:20px}
+#loading .bar{width:180px;height:6px;border-radius:4px;background:#ffffff1a;overflow:hidden;margin:12px auto 0}
+#loading .bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .2s}
+#loading.err{color:#ffb3ad}
+#panel{flex:0 0 auto;background:var(--panel);border-top:1px solid var(--line);padding:12px 12px max(12px,env(safe-area-inset-bottom));max-height:42vh;overflow:auto}
+.row{display:flex;gap:8px;align-items:center}
+.row+.row{margin-top:10px}
+button{font:inherit;cursor:pointer}
+.main{flex:1;border:0;border-radius:14px;padding:13px 10px;font-weight:800;background:var(--acc);color:#14161b}
+.alt{flex:1;border:0;border-radius:14px;padding:13px 10px;font-weight:700;background:#26324a;color:var(--txt)}
+.seg{display:flex;background:#0d131d;border:1px solid var(--line);border-radius:12px;padding:3px;flex:1}
+.seg button{flex:1;border:0;background:transparent;color:var(--mut);padding:8px 4px;border-radius:9px;font-size:13px;font-weight:700}
+.seg button.on{background:#2a3650;color:var(--txt)}
+label.tog{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mut);white-space:nowrap}
+label.tog input{accent-color:var(--acc);width:18px;height:18px}
+h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin:14px 2px 8px}
+.combos{display:flex;flex-direction:column;gap:6px}
+.combo{display:block;text-align:left;width:100%;border:1px solid var(--line);background:#1a2333;color:var(--txt);border-radius:12px;padding:10px 12px;font-size:14px}
+.combo.on{border-color:var(--acc);background:#2a2a1d}
+.combo small{display:block;color:var(--mut);font-size:12px;margin-top:3px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:#1a2333;color:var(--txt);border-radius:99px;padding:7px 11px;font-size:13px}
+.chip:active{background:#2a3650}
+.note{font-size:11px;color:#77839a;margin-top:12px;line-height:1.45}
+</style>
+<script>
+window.__coachDiag=[];
+addEventListener('error',e=>{__coachDiag.push((e.message||'erro')+' '+(e.filename||'').split('/').pop()+(e.target&&e.target.src?(' '+e.target.src.split('/').pop()):''));},true);
+addEventListener('unhandledrejection',e=>__coachDiag.push('promise: '+(e.reason&&e.reason.message||e.reason)));
+setTimeout(()=>{const l=document.getElementById('loading');if(l&&!l.classList.contains('err')){l.classList.add('err');
+const ua=navigator.userAgent.match(/OS (\d+[_\d]*)/);l.innerHTML='<div><b>O treinador não carregou.</b><br><small>'+(__coachDiag.join('<br>')||'Sem erro registrado (possível falta de suporte a import maps).')+'<br>iOS: '+(ua?ua[1].replace(/_/g,'.'):'?')+' · WebGL2: '+(!!document.createElement('canvas').getContext('webgl2'))+'</small><br><br><button class="alt" onclick="location.reload()">Tentar novamente</button></div>';}},25000);
+</script>
+<script type="importmap">
+{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/addons/"}}
+</script>
+</head>
+<body>
+<div id="stage">
+  <div class="hud"><div class="brand">BOXING FIT · TREINADOR</div><div class="speedTag" id="speedTag">1×</div></div>
+  <div class="camBtns"><button data-cam="front">Frente</button><button data-cam="side">Lado</button><button data-cam="three">3/4</button><button data-cam="close">Perto</button></div>
+  <div class="now"><div class="cur" id="cur">Base</div><div class="nxt" id="nxt">Escolha uma combinação</div><div class="steps" id="steps"></div></div>
+  <div id="loading"><div><div>Carregando treinador 3D…</div><div class="bar"><i id="bar"></i></div></div></div>
+</div>
+<div id="panel">
+  <div class="row">
+    <button class="main" id="play">▶ Executar</button>
+    <button class="alt" id="pause">⏸ Pausar</button>
+    <button class="alt" id="repeat">↻ Repetir</button>
+  </div>
+  <div class="row">
+    <div class="seg" id="speedSeg"><button data-s="0.35">Muito lento</button><button data-s="0.6">Lento</button><button data-s="1" class="on">Normal</button></div>
+  </div>
+  <div class="row">
+    <label class="tog"><input type="checkbox" id="loop"> Demonstração contínua</label>
+    <label class="tog"><input type="checkbox" id="pauseBetween" checked> Pausa entre repetições</label>
+  </div>
+  <h3>Combinações</h3>
+  <div class="combos" id="combos"></div>
+  <h3>Golpes</h3><div class="chips" data-kind="strike"></div>
+  <h3>Defesas</h3><div class="chips" data-kind="defense"></div>
+  <h3>Movimentação</h3><div class="chips" data-kind="footwork"></div>
+  <p class="note">Base ortodoxa (pé esquerdo à frente). Arraste para girar a câmera, use dois dedos para zoom. Animação ilustrativa: não substitui a orientação de um profissional.</p>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { BoxingCoach } from './src/boxing-coach.js';
+
+const $ = s => document.querySelector(s);
+const stage = $('#stage');
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+stage.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0e131b);
+scene.fog = new THREE.Fog(0x0e131b, 7, 16);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.45;
+
+const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.enablePan = false;
+controls.minDistance = 1.4; controls.maxDistance = 6; controls.maxPolarAngle = Math.PI * 0.53;
+controls.target.set(0, 1.05, 0);
+
+// ---------- luzes ----------
+scene.add(new THREE.HemisphereLight(0xcfdcff, 0x2a2018, 0.55));
+const key = new THREE.DirectionalLight(0xfff1e0, 2.4);
+key.position.set(2.2, 4.5, 3.2); key.castShadow = true;
+key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.02;
+Object.assign(key.shadow.camera, { left: -1.6, right: 1.6, top: 2.3, bottom: -0.3, near: 0.5, far: 12 });
+scene.add(key, key.target);
+const rim = new THREE.DirectionalLight(0xffd2a6, 1.6); rim.position.set(-2.5, 3, -3.5); scene.add(rim);
+const fill = new THREE.DirectionalLight(0x9fb8ff, 0.5); fill.position.set(-3, 1.5, 2); scene.add(fill);
+
+// ---------- ringue leve ----------
+function canvasTex(draw, w = 512, h = 512) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
+}
+const ringSize = 7.4, half = ringSize / 2;
+const canvasMap = canvasTex((g, w, h) => {
+  g.fillStyle = '#3a4c66'; g.fillRect(0, 0, w, h);
+  for (let i = 0; i < 9000; i++) { g.fillStyle = `rgba(255,255,255,${Math.random() * 0.035})`; g.fillRect(Math.random() * w, Math.random() * h, 2, 2); }
+  g.strokeStyle = 'rgba(255,255,255,.18)'; g.lineWidth = 6; g.beginPath(); g.arc(w / 2, h / 2, w * 0.17, 0, Math.PI * 2); g.stroke();
+  g.fillStyle = 'rgba(255,201,78,.5)'; g.font = 'bold 34px -apple-system,sans-serif'; g.textAlign = 'center'; g.fillText('BOXING FIT', w / 2, h / 2 + 12);
+});
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(ringSize, ringSize), new THREE.MeshStandardMaterial({ map: canvasMap, roughness: 0.92 }));
+floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+const apron = new THREE.Mesh(new THREE.BoxGeometry(ringSize + 0.5, 0.5, ringSize + 0.5), new THREE.MeshStandardMaterial({ color: 0x1b2230, roughness: 0.8 }));
+apron.position.y = -0.251; scene.add(apron);
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.MeshStandardMaterial({ color: 0x0c1017, roughness: 1 }));
+ground.rotation.x = -Math.PI / 2; ground.position.y = -0.5; scene.add(ground);
+const postMat = new THREE.MeshStandardMaterial({ color: 0x9aa3ae, metalness: 0.7, roughness: 0.35 });
+const padMat = new THREE.MeshStandardMaterial({ color: 0xb71f27, roughness: 0.5 });
+const ropeMats = [0xd8d8d8, 0xb71f27, 0x2f5fb0].map(c => new THREE.MeshStandardMaterial({ color: c, roughness: 0.55 }));
+for (const [x, z] of [[-half, -half], [half, -half], [half, half], [-half, half]]) {
+  const p = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.5, 12), postMat); p.position.set(x, 0.75, z); scene.add(p);
+  const pad = new THREE.Mesh(new THREE.BoxGeometry(0.16, 1.1, 0.16), padMat); pad.position.set(x * 0.985, 0.85, z * 0.985); scene.add(pad);
+}
+const ropeGeo = new THREE.CylinderGeometry(0.022, 0.022, ringSize, 8);
+[0.55, 0.9, 1.25].forEach((y, i) => {
+  for (let s = 0; s < 4; s++) {
+    const r = new THREE.Mesh(ropeGeo, ropeMats[i]); r.rotation.z = Math.PI / 2;
+    const g = new THREE.Group(); g.add(r); g.rotation.y = s * Math.PI / 2; g.position.y = y;
+    r.position.z = half; scene.add(g);
+  }
+});
+
+// ---------- câmera ----------
+const CAMS = {
+  front: { pos: [0.0, 1.25, 3.3], tgt: [0, 0.92, 0] },
+  side: { pos: [3.2, 1.2, 0.4], tgt: [0, 0.92, 0.1] },
+  three: { pos: [-2.2, 1.35, 2.5], tgt: [0, 0.92, 0] },
+  close: { pos: [0.45, 1.45, 1.75], tgt: [0, 1.3, 0] },
+};
+let camAnim = null;
+let coach = null, selected = null, lastSeq = null;
+function setCam(name, instant) {
+  const c = CAMS[name]; const off = coach ? coach.root.position : new THREE.Vector3();
+  const tp = new THREE.Vector3(...c.pos).add(off), tt = new THREE.Vector3(...c.tgt).add(off);
+  if (instant) { camera.position.copy(tp); controls.target.copy(tt); return; }
+  camAnim = { p0: camera.position.clone(), t0: controls.target.clone(), p1: tp, t1: tt, k: 0 };
+}
+document.querySelectorAll('[data-cam]').forEach(b => b.onclick = () => setCam(b.dataset.cam));
+
+function resize() {
+  const w = stage.clientWidth, h = stage.clientHeight;
+  renderer.setSize(w, h, false); camera.aspect = w / h;
+  camera.fov = w / h < 0.9 ? 44 : 34; camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(stage); resize(); setCam('front', true);
+
+// ---------- treinador ----------
+const curEl = $('#cur'), nxtEl = $('#nxt'), stepsEl = $('#steps');
+try {
+  const embedded = window.COACH_EMBED ? await import(window.COACH_EMBED).catch(e => { __coachDiag.push('embed: ' + e.message); return null; }) : null;
+  let modelData = null;
+  if (embedded) { const bin = atob(embedded.glb); const u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); modelData = u8.buffer; }
+  coach = await BoxingCoach.load({ parent: scene, modelData, config: embedded?.config || null, onProgress: p => $('#bar').style.width = (p * 100).toFixed(0) + '%' });
+  $('#loading').remove();
+} catch (e) {
+  console.error(e);
+  const l = $('#loading'); l.classList.add('err');
+  l.innerHTML = `<div><b>Não foi possível carregar o treinador 3D.</b><br><small>${e.message}<br>${(window.__coachDiag||[]).join('<br>')}</small><br><br><button class="alt" onclick="location.reload()">Tentar novamente</button></div>`;
+}
+const label = n => coach?.config.moves[n]?.label || n;
+function renderSteps(seq, idx) {
+  stepsEl.innerHTML = seq.length > 1 ? seq.map((_, i) => `<i class="${i < idx ? 'done' : i === idx ? 'on' : ''}"></i>`).join('') : '';
+}
+if (coach) {
+  const combosEl = $('#combos');
+  coach.combos.forEach(c => {
+    const b = document.createElement('button'); b.className = 'combo';
+    b.innerHTML = `${c.name}<small>${c.moves.map(label).join(' → ')}</small>`;
+    b.onclick = () => { selected = c; document.querySelectorAll('.combo').forEach(x => x.classList.toggle('on', x === b)); run(c.moves); };
+    combosEl.append(b);
+  });
+  for (const [name, m] of Object.entries(coach.config.moves)) {
+    if (name === 'idle') continue;
+    const box = document.querySelector(`.chips[data-kind="${m.type}"]`); if (!box) continue;
+    const b = document.createElement('button'); b.className = 'chip'; b.textContent = m.label;
+    b.onclick = () => { selected = null; document.querySelectorAll('.combo').forEach(x => x.classList.remove('on')); run([name]); };
+    box.append(b);
+  }
+  let currentSeq = [];
+  coach.on('comboStart', e => { currentSeq = e.moves; });
+  coach.on('moveStart', e => {
+    curEl.textContent = e.label; curEl.classList.add('pulse'); setTimeout(() => curEl.classList.remove('pulse'), 140);
+    nxtEl.innerHTML = e.next ? `Próximo: <b>${label(e.next)}</b>` : (e.total > 1 ? 'Último golpe' : '&nbsp;');
+    renderSteps(currentSeq.length === e.total ? currentSeq : [], e.index);
+  });
+  coach.on('recenterStart', () => { currentSeq = []; });
+  coach.on('comboEnd', () => { renderSteps(currentSeq, currentSeq.length); });
+}
+let runToken = 0;
+async function run(seq) {
+  if (!coach) return;
+  lastSeq = seq; const tok = ++runToken;
+  if (coach.paused) { coach.resume(); $('#pause').textContent = '⏸ Pausar'; }
+  do {
+    await coach.playCombo(seq);
+    if (tok !== runToken) return;
+    curEl.textContent = 'Base'; nxtEl.textContent = $('#loop').checked ? 'Repetindo…' : 'Toque em Repetir';
+    if ($('#loop').checked && $('#pauseBetween').checked) await new Promise(r => setTimeout(r, 1100 / coach.getSpeed()));
+  } while ($('#loop').checked && tok === runToken);
+}
+$('#play').onclick = () => run(selected ? selected.moves : (lastSeq || coach.combos[0].moves));
+$('#repeat').onclick = () => lastSeq && run(lastSeq);
+$('#pause').onclick = () => { if (!coach) return; if (coach.paused) { coach.resume(); $('#pause').textContent = '⏸ Pausar'; } else { coach.pause(); $('#pause').textContent = '▶ Continuar'; } };
+$('#speedSeg').onclick = e => {
+  const b = e.target.closest('button'); if (!b || !coach) return;
+  document.querySelectorAll('#speedSeg button').forEach(x => x.classList.toggle('on', x === b));
+  coach.setSpeed(+b.dataset.s); $('#speedTag').textContent = (+b.dataset.s) + '×';
+};
+$('#loop').onchange = () => { if ($('#loop').checked && !coach.isPlaying) run(lastSeq || coach.combos[0].moves); };
+
+// ---------- loop ----------
+const clock = new THREE.Clock(); const prevRoot = new THREE.Vector3();
+renderer.setAnimationLoop(() => {
+  const dt = clock.getDelta();
+  if (coach) {
+    coach.update(dt);
+    // câmera acompanha o deslocamento do treinador suavemente
+    const d = coach.root.position.clone().sub(prevRoot).multiplyScalar(Math.min(1, dt * 4));
+    camera.position.add(d); controls.target.add(d); prevRoot.add(d);
+    key.position.set(prevRoot.x + 2.2, 4.5, prevRoot.z + 3.2); key.target.position.copy(prevRoot);
+  }
+  if (camAnim) {
+    camAnim.k = Math.min(1, camAnim.k + dt * 2.5); const e = 1 - Math.pow(1 - camAnim.k, 3);
+    camera.position.lerpVectors(camAnim.p0, camAnim.p1, e); controls.target.lerpVectors(camAnim.t0, camAnim.t1, e);
+    if (camAnim.k >= 1) camAnim = null;
+  }
+  controls.update();
+  renderer.render(scene, camera);
+});
+document.addEventListener('visibilitychange', () => { if (document.hidden) clock.stop(); else clock.start(); });
+window.coach = () => coach;
+</script>
+</body>
+</html>

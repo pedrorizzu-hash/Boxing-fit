@@ -1,71 +1,947 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0c111b"><title>Boxing Fit 2.0 · Treinador virtual</title><style>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0c111b"><title>Boxing Fit 3.0 · Treinador personalizado</title><style>
 :root{font-family:system-ui,-apple-system,Arial;color:#f5f7fc;background:#0c111b;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,select,input{font:inherit}button{border:0;cursor:pointer;border-radius:14px;padding:13px 16px;font-weight:750;background:#ffc94e;color:#12151d}button:disabled{opacity:.4}button.alt{background:#293347;color:#f6f7fc}button.ghost{background:transparent;border:1px solid #364155;color:#e3e8f3}.shell{max-width:600px;margin:auto;padding:20px 16px 105px}.top{display:flex;justify-content:space-between;align-items:center}.brand{color:#ffc94e;font-weight:900;letter-spacing:.07em}.pill{border:1px solid #344052;border-radius:99px;padding:7px 11px;color:#cbd3e1;font-size:12px}.muted{color:#aab5c6}.small{font-size:13px}.card{background:#192231;border:1px solid #2a3649;border-radius:22px;padding:19px;margin-top:15px}.hero{font-size:31px;letter-spacing:-.04em;margin:20px 0 4px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stat{background:#1b2636;border-radius:15px;padding:13px;text-align:center}.stat strong{display:block;font-size:25px;color:#ffc94e}.stat span{font-size:12px;color:#b6c0d0}.label{font-size:12px;color:#ffc94e;text-transform:uppercase;font-weight:850;letter-spacing:.08em}.workouts{display:grid;gap:10px;margin-top:12px}.workout{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left;background:#263145;color:white;border:2px solid transparent}.workout.selected{border-color:#ffc94e;background:#353627}.workout small{display:block;color:#b8c4d3;margin-top:4px;font-weight:400}.progress{height:8px;background:#344054;border-radius:10px;overflow:hidden}.fill{height:100%;width:0;background:#ffc94e;transition:width .2s}.stage{height:320px;border-radius:19px;background:radial-gradient(ellipse at 50% 65%,#34445d,#111927 72%);position:relative;overflow:hidden;display:grid;place-items:center;margin:12px 0}.stage svg{width:270px;height:290px;overflow:visible} #coach{filter:drop-shadow(0 8px 8px #0004)}.stage .caption{position:absolute;bottom:11px;font-size:12px;color:#c4cfdf;text-align:center;left:12px;right:12px}.stage .floor{fill:#080d16;opacity:.55}.fighter{transform-origin:135px 155px;animation:idle 2.2s ease-in-out infinite}.arm-l,.arm-r{transform-box:fill-box;transform-origin:50% 8%}.legs{transform-origin:135px 200px}.stage.jab .arm-l{animation:jab .95s ease-in-out infinite}.stage.direct .arm-r{animation:direct 1.15s ease-in-out infinite}.stage.hook .arm-l{animation:hook 1.25s ease-in-out infinite}.stage.slip .fighter{animation:slip 1.8s ease-in-out infinite}.stage.step .fighter{animation:step 1.6s ease-in-out infinite}.stage.squat .fighter{animation:squat 2s ease-in-out infinite}.stage.march .legs{animation:march .8s ease-in-out infinite}.stage.combo .arm-l{animation:jab 1.8s ease-in-out infinite}.stage.combo .arm-r{animation:direct 1.8s ease-in-out infinite .6s}.stage.rest .fighter{animation:idle 3s ease-in-out infinite}.stage.paused *{animation-play-state:paused!important}@keyframes idle{50%{transform:translateY(4px)}}@keyframes jab{0%,8%,43%,100%{transform:translate(0,0) rotate(0)}23%{transform:translate(-38px,-28px) rotate(-35deg)}}@keyframes direct{0%,25%,65%,100%{transform:translate(0,0) rotate(0)}43%{transform:translate(37px,-30px) rotate(37deg)}}@keyframes hook{0%,15%,65%,100%{transform:rotate(0) translate(0)}36%{transform:rotate(-60deg) translate(-18px,-7px)}}@keyframes slip{0%,100%{transform:rotate(0) translateX(0)}30%{transform:rotate(-9deg) translateX(-14px)}70%{transform:rotate(9deg) translateX(14px)}}@keyframes step{0%,100%{transform:translateX(0)}30%{transform:translateX(-22px)}70%{transform:translateX(20px)}}@keyframes squat{0%,100%{transform:translateY(0)}50%{transform:translateY(24px) scaleY(.94)}}@keyframes march{0%,100%{transform:rotate(0)}50%{transform:rotate(4deg)}}@media(prefers-reduced-motion:reduce){.fighter,.arm-l,.arm-r,.legs{animation:none!important}}.clock{font-size:72px;font-weight:900;text-align:center;letter-spacing:-.06em;font-variant-numeric:tabular-nums;margin:4px 0}.actions{display:flex;gap:9px}.actions button{flex:1}.tip{border-left:3px solid #ffc94e;padding:8px 12px;background:#222e3f;border-radius:0 10px 10px 0;color:#dbe2ec;font-size:14px}.tabs{position:fixed;bottom:0;left:0;right:0;background:#111a29;border-top:1px solid #303b4e;display:flex;justify-content:center;padding:10px 10px max(10px,env(safe-area-inset-bottom));z-index:5}.tabs button{max-width:190px;flex:1;background:none;color:#aebbd0;padding:8px;font-size:12px}.tabs button.active{color:#ffc94e}.tabs b{display:block;font-size:21px;margin-bottom:2px}.hidden{display:none!important}.move{background:#273449;border-radius:12px;padding:13px;margin:9px 0}.move strong{color:#ffc94e}.move p{margin:5px 0;font-size:14px;color:#c6d1e1}.row{display:flex;justify-content:space-between;gap:10px;align-items:center}.toggle{display:flex;align-items:center;gap:10px;margin:14px 0}.toggle input{accent-color:#ffc94e;width:19px;height:19px}.history{padding-left:20px;line-height:2}.history li{color:#d8e0ec}.badge{display:inline-block;border-radius:99px;padding:5px 9px;background:#314158;color:#f5f7fb;font-size:12px}h2{margin:5px 0 10px;font-size:23px}h3{margin:7px 0}.weekbuttons{display:flex;gap:5px;margin:12px 0}.weekbuttons button{padding:9px 0;flex:1;background:#2b3548;color:#e8edf6}.weekbuttons button.active{background:#ffc94e;color:#141820} .note{font-size:12px;color:#9daabc;line-height:1.5}
-</style><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./icon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Boxing Fit"></head><body><main class="shell"><div class="top"><div class="brand">🥊 BOXING FIT</div><div class="pill" id="weekPill">SEMANA 1 / 6</div></div>
-<section id="home"><h1 class="hero">Treine com seu coach.</h1><p class="muted">Boxe fitness em casa · sem equipamentos · progressão para melhorar o fôlego.</p><div class="grid"><div class="stat"><strong id="sessions">0</strong><span>treinos feitos</span></div><div class="stat"><strong id="minutes">0</strong><span>minutos</span></div><div class="stat"><strong id="streak">0</strong><span>dias ativos</span></div></div><div class="card"><div class="label">Programa de 6 semanas</div><h2>Escolha seu treino</h2><div class="workouts" id="workouts"></div><p class="muted small" id="planInfo"></p><button style="width:100%" id="goTrain">Começar treino →</button></div><div class="card"><div class="label">Seu plano</div><p>3 treinos semanais sugeridos: técnica, defesa, cardio ou preparo para jiu-jitsu. Comece leve, com dias de recuperação entre as sessões.</p><div class="progress"><div class="fill" id="programBar"></div></div><p class="small muted" id="programText"></p></div></section>
-<section id="train" class="hidden"><p class="muted small" id="resumeNotice"></p><div class="row"><span class="label" id="phase">AQUECIMENTO</span><span class="badge" id="position">1 / 1</span></div><h2 id="moveTitle" style="margin-top:12px"></h2><p class="muted small" id="instruction"></p><div class="stage rest" id="stage" role="img" aria-label="Treinador virtual com movimentos articulados"><svg viewBox="0 0 270 300" aria-hidden="true"><defs><linearGradient id="shirt" x1="0" x2="1"><stop stop-color="#f7c642"/><stop offset="1" stop-color="#d88d2e"/></linearGradient></defs><ellipse cx="135" cy="281" rx="76" ry="11" fill="#080d16" opacity=".55"/><g id="coach"><g id="coachLegs"><path id="legBack" fill="none" stroke="#526b92" stroke-width="22" stroke-linecap="round"/><path id="legFront" fill="none" stroke="#354e75" stroke-width="23" stroke-linecap="round"/><path id="shoeBack" fill="none" stroke="#f0b945" stroke-width="13" stroke-linecap="round"/><path id="shoeFront" fill="none" stroke="#f0b945" stroke-width="13" stroke-linecap="round"/></g><path id="body" fill="url(#shirt)" stroke="#c68c39" stroke-width="2"/><path id="armBack" fill="none" stroke="#b97e62" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><circle id="gloveBack" r="16" fill="#e65764" stroke="#a72c42" stroke-width="2"/><path id="armFront" fill="none" stroke="#c99575" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><circle id="gloveFront" r="17" fill="#fa5c69" stroke="#ae3045" stroke-width="2"/><rect id="neck" width="15" height="20" rx="6" fill="#b98568"/><circle id="head" r="30" fill="#c99575"/><path id="hair" fill="#1e293b"/><path id="eyes" stroke="#1e293b" stroke-width="3" stroke-linecap="round" fill="none"/></g></svg><div class="caption" id="caption">Treinador articulado · acompanhe a técnica e a guarda</div></div><div class="clock" id="clock">05:00</div><div class="progress"><div class="fill" id="stepBar"></div></div><p class="muted small row"><span id="upNext"></span><span id="totalLeft"></span></p><div class="actions"><button class="alt" id="previous">← Voltar</button><button id="play">▶ Iniciar</button><button class="alt" id="next">Pular →</button></div><p class="tip" id="tip"></p><button class="ghost" style="width:100%;margin-top:12px" id="exit">Sair do treino</button></section>
-<section id="library" class="hidden"><h1 class="hero">Aprenda os golpes.</h1><p class="muted">Observe os golpes e leia as orientações antes de praticar.</p><div id="libraryMoves"></div><div class="card"><div class="label">Demonstração</div><h2 id="demoTitle">Jab</h2><div class="stage jab" id="demoStage"><svg viewBox="0 0 270 300" aria-hidden="true"><use href="#"/></svg><div class="caption">Animação ilustrativa, não substitui orientação presencial</div></div><p class="tip" id="demoTip"></p></div></section>
-<section id="progressPage" class="hidden"><h1 class="hero">Sua evolução.</h1><div class="card"><div class="label">Histórico de treinos</div><h2 id="totalDone">0 sessões</h2><ol class="history" id="history"></ol><button class="ghost" id="clearHistory">Apagar histórico</button></div><div class="card"><div class="label">Preferências</div><label class="toggle"><input type="checkbox" id="voice" checked> Orientações por voz (português)</label><label class="toggle"><input type="checkbox" id="sound" checked> Sinal sonoro nas transições</label><label class="toggle"><input type="checkbox" id="vibration" checked> Vibração, quando disponível</label><p class="note">O áudio depende das permissões e configurações do navegador. A tela deve permanecer aberta para o cronômetro funcionar de forma confiável.</p></div><div class="card"><div class="label">Semana do programa</div><p class="muted small">A semana avança automaticamente a cada 7 dias desde o primeiro acesso. Você pode escolher outra semana para revisar treinos.</p><div class="weekbuttons" id="weekButtons"></div></div><div class="card"><div class="label">Proteção dos seus dados</div><h2>Backup e recuperação</h2><p class="muted small">O treino é salvo automaticamente neste navegador. Para não depender apenas do iPhone, exporte um backup e salve no app Arquivos, iCloud Drive ou outro local seguro.</p><p class="small" id="saveStatus" role="status">Verificando armazenamento…</p><div class="actions"><button id="exportBackup">⬇ Exportar backup</button><button class="alt" id="importBackup">⬆ Restaurar backup</button></div><input id="backupFile" type="file" accept=".json,application/json" style="display:none"><p class="note">Sem uma conta e um servidor de sincronização, nenhum arquivo HTML pode garantir recuperação caso os dados do navegador e o backup sejam apagados.</p></div></section></main>
-<nav class="tabs" aria-label="Navegação"><button data-tab="home" class="active"><b>⌂</b>Início</button><button data-tab="train"><b>🥊</b>Treinar</button><button data-tab="library"><b>◉</b>Golpes</button><button data-tab="progressPage"><b>▥</b>Evolução</button></nav>
-<script>
-const $=id=>document.getElementById(id), key='boxingFitV3';let data;try{data=JSON.parse(localStorage.getItem(key))||{}}catch(e){data={}};data.start||=Date.now();data.history||=[];data.preferences||={voice:true,sound:true,vibration:true};data.selected??=0;data.weekOverride??=null;const save=()=>{try{localStorage.setItem(key,JSON.stringify(data));const el=$('saveStatus');if(el)el.textContent='✓ Salvo neste navegador · '+new Date().toLocaleTimeString('pt-BR');return true}catch(e){const el=$('saveStatus');if(el)el.textContent='⚠ Não foi possível salvar. Exporte um backup.';return false}};save();
-const moves={jab:{name:'Jab',anim:'jab',tip:'Mão da frente em linha reta, queixo protegido e retorno rápido à guarda.'},direct:{name:'Direto',anim:'direct',tip:'Estenda a mão de trás e gire suavemente quadril e ombro. Não trave o cotovelo.'},hook:{name:'Cruzado',anim:'hook',tip:'Golpe em arco curto, cotovelo controlado, girando o tronco sem forçar a coluna.'},slip:{name:'Esquiva lateral',anim:'slip',tip:'Desloque pouco a cabeça com leve flexão dos joelhos; mantenha os olhos à frente.'},step:{name:'Deslocamento',anim:'step',tip:'Passos curtos e equilibrados; evite cruzar os pés.'},march:{name:'Marcha ativa',anim:'march',tip:'Marche em ritmo confortável e respire regularmente.'},squat:{name:'Agachamento leve',anim:'squat',tip:'Desça somente até onde for confortável, com pés firmes e joelhos acompanhando os pés.'},combo:{name:'Combinação',anim:'combo',tip:'Alterne os golpes com controle, retornando à guarda após cada soco.'},rest:{name:'Recuperação',anim:'rest',tip:'Reduza o ritmo, caminhe lentamente e recupere a respiração.'}};
-const plans=[
-{name:'Fundamentos e técnica',sub:'Guarda, base, jab, direto e combinações',rounds:[['Base e guarda','step'],['Jab técnico','jab'],['Direto com giro','direct'],['Jab–direto','combo'],['Jab–direto–esquiva','slip'],['Combinação de 4 golpes','combo']]},
-{name:'Defesa e movimentação',sub:'Esquivas, deslocamentos e contra-ataque',rounds:[['Passos com guarda','step'],['Esquiva para os dois lados','slip'],['Jab e saída lateral','jab'],['Esquiva e direto','direct'],['Jab–direto–esquiva','combo'],['Defesa + contra-ataque','slip']]},
-{name:'Cardio de boxe',sub:'Intervalos progressivos sem saltos obrigatórios',rounds:[['Marcha ativa com guarda','march'],['Jab–direto contínuo','combo'],['Passos laterais com golpes','step'],['Agachamento controlado','squat'],['Sequência de 4 golpes','combo'],['Boxe sombra em ritmo','combo']]},
-{name:'Boxe + preparo para jiu-jitsu',sub:'Base, deslocamento, fôlego e resistência',rounds:[['Base e deslocamento','step'],['Esquiva e recuperação de base','slip'],['Jab–direto com giro','combo'],['Agachamento sem impacto','squat'],['Marcha forte e guarda','march'],['Combinação + saída lateral','combo']]}
-];
-const drillDetails={
-'Base e guarda':'Pé dominante atrás, queixo baixo, mãos na altura do rosto. Transfira o peso sem cruzar os pés.',
-'Jab técnico':'Estenda a mão da frente, gire levemente o ombro e recolha imediatamente à guarda.',
-'Direto com giro':'Gire o pé de trás e o quadril junto do soco. Evite travar o cotovelo.',
-'Jab–direto':'Um-dois: jab, recolhe; direto com giro, recolhe. Exale em cada golpe.',
-'Jab–direto–esquiva':'Execute um-dois e tire a cabeça da linha central com leve flexão de joelhos.',
-'Combinação de 4 golpes':'Jab, direto, cruzado, direto. Priorize técnica e equilíbrio antes da velocidade.',
-'Passos com guarda':'Passo curto com o pé do lado do deslocamento; o outro acompanha sem cruzar.',
-'Esquiva para os dois lados':'Mova cabeça e tronco juntos com os joelhos flexionados. Olhe à frente.',
-'Jab e saída lateral':'Solte o jab, recolha à guarda e saia um passo para o lado.',
-'Esquiva e direto':'Esquive com controle e responda com direto sem perder a base.',
-'Defesa + contra-ataque':'Esquiva à esquerda, à direita e resposta com jab–direto.',
-'Marcha ativa com guarda':'Marche em ritmo confortável e mantenha a guarda ativa.',
-'Jab–direto contínuo':'Repita um-dois em séries curtas. Mantenha ombros relaxados.',
-'Passos laterais com golpes':'Desloque um passo, estabilize a base e solte jab–direto.',
-'Agachamento controlado':'Sente o quadril para trás, mantenha os calcanhares apoiados e suba sem pressa.',
-'Sequência de 4 golpes':'Jab, direto, jab, direto. Respire e volte à guarda a cada golpe.',
-'Boxe sombra em ritmo':'Alterne jab, direto e esquivas, com intensidade que permita manter a técnica.',
-'Base e deslocamento':'Avance e recue com passos curtos, joelhos soltos e tronco estável.',
-'Esquiva e recuperação de base':'Esquive, retorne à base e mantenha os pés prontos para mover.',
-'Jab–direto com giro':'Use o quadril no direto e recupere a base após o combo.',
-'Agachamento sem impacto':'Flexione joelhos e quadril até uma amplitude confortável, sem saltar.',
-'Marcha forte e guarda':'Eleve o ritmo da marcha sem perder postura e respiração.',
-'Combinação + saída lateral':'Faça jab–direto, recue e saia para um dos lados.'};
-function week(){return data.weekOverride||Math.min(6,Math.max(1,Math.floor((Date.now()-data.start)/604800000)+1))}
-function roundTime(){return week()<=2?120:week()<=4?150:180}
-function plan(){return plans[data.selected]||plans[0]}
-function stepsFor(){let r=[{title:'Aquecimento: mobilidade e base',move:'march',time:180,desc:'Marche leve, mobilize ombros, quadris e tornozelos. Pratique a guarda.'},{title:'Aquecimento: golpes lentos',move:'combo',time:120,desc:'Jab e direto devagar, sem potência, focando na postura.'}];plan().rounds.forEach(([title,move],i)=>{r.push({title,move,time:roundTime(),desc:drillDetails[title]||moves[move].tip,round:i+1});if(i<plan().rounds.length-1)r.push({title:'Recuperação ativa',move:'rest',time:week()<=2?60:45,desc:'Caminhe devagar. Inspire pelo nariz e solte o ar sem prender a respiração.'})});r.push({title:'Volta à calma',move:'rest',time:180,desc:'Reduza o ritmo, respire e faça mobilidade leve de ombros e quadris.'});return r}
-let steps=stepsFor(),idx=0,remaining=steps[0].time,running=false,deadline=0,interval=null,started=false,completed=false;const fmt=s=>`${String(Math.floor(Math.max(0,s)/60)).padStart(2,'0')}:${String(Math.max(0,s)%60).padStart(2,'0')}`;
-function speak(t){if(!data.preferences.voice||!('speechSynthesis'in window))return;try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';u.rate=1.03;speechSynthesis.speak(u)}catch(e){}}
-let audioCtx;function cue(){if(data.preferences.vibration&&navigator.vibrate)navigator.vibrate(100);if(!data.preferences.sound)return;try{audioCtx||=new (window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=680;g.gain.value=.06;o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.13)}catch(e){}}
-function refreshHome(){$('weekPill').textContent=`SEMANA ${week()} / 6`;$('sessions').textContent=data.history.length;$('minutes').textContent=Math.round(data.history.reduce((a,x)=>a+x.seconds,0)/60);$('streak').textContent=new Set(data.history.map(x=>new Date(x.date).toLocaleDateString('en-CA'))).size;$('workouts').innerHTML=plans.map((p,i)=>`<button class="workout ${i===data.selected?'selected':''}" data-workout="${i}"><span>${'ABCD'[i]} · ${p.name}<small>${p.sub}</small></span><span>›</span></button>`).join('');document.querySelectorAll('[data-workout]').forEach(b=>b.onclick=()=>{data.selected=+b.dataset.workout;save();resetSession();refreshHome()});let duration=stepsFor().reduce((a,s)=>a+s.time,0);$('planInfo').textContent=`${Math.round(duration/60)} minutos · ${plan().rounds.length} rounds de ${roundTime()} segundos · pausas de 1 minuto`;$('programBar').style.width=`${Math.min(100,data.history.length/18*100)}%`;$('programText').textContent=`${Math.min(18,data.history.length)} de 18 sessões sugeridas concluídas`}
-function tab(t){document.querySelectorAll('main section[id="home"],main section[id="train"],main section[id="library"],main section[id="progressPage"]').forEach(x=>x.classList.toggle('hidden',x.id!==t));document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));if(t==='progressPage')renderProgress();if(t==='train')render();window.scrollTo(0,0)}document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>tab(b.dataset.tab));$('goTrain').onclick=()=>tab('train');$('exit').onclick=()=>{pause();tab('home')};
-function setStage(stage,move){stage.className='stage '+(moves[move]?.anim||'rest')+(!running&&stage.id==='stage'?' paused':'')}
-function render(){let s=steps[idx];$('phase').textContent=s.round?`ROUND ${s.round} / ${plan().rounds.length}`:(s.title==='Descanso'?'RECUPERAÇÃO':'PREPARAÇÃO');$('position').textContent=`Etapa ${idx+1} / ${steps.length}`;$('moveTitle').textContent=s.title;$('instruction').textContent=s.desc;$('tip').textContent=moves[s.move].tip;$('clock').textContent=fmt(remaining);$('stepBar').style.width=`${100*(1-remaining/s.time)}%`;$('upNext').textContent=idx<steps.length-1?'Próximo: '+steps[idx+1].title:'Última etapa';$('totalLeft').textContent='Restam '+fmt(steps.slice(idx+1).reduce((a,v)=>a+v.time,remaining));$('play').textContent=running?'Ⅱ Pausar':started?'▶ Continuar':'▶ Iniciar';$('previous').disabled=idx===0;setStage($('stage'),s.move);$('caption').textContent=s.move==='rest'?'Respire e recupere o ritmo':'Observe os pés, quadril e retorno à guarda'}
-function pause(){if(running){remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000))}running=false;clearInterval(interval);interval=null;checkpoint();render()}
-function start(){if(running){pause();return}started=true;running=true;deadline=Date.now()+remaining*1000;checkpoint();speak(steps[idx].title+'. '+steps[idx].desc);render();interval=setInterval(tick,200)}
-function tick(){let r=Math.max(0,Math.ceil((deadline-Date.now())/1000));if(r!==remaining){remaining=r;checkpoint();render()}if(r<=0)advance(true)}
-function advance(auto=false){let wasRunning=running;clearInterval(interval);interval=null;running=false;if(idx===steps.length-1){finish();return}idx++;remaining=steps[idx].time;checkpoint();cue();render();if(wasRunning){running=true;deadline=Date.now()+remaining*1000;interval=setInterval(tick,200);speak(steps[idx].title+'. '+steps[idx].desc);render()}else if(!auto)speak(steps[idx].title)}
-function finish(){if(completed)return;completed=true;running=false;clearInterval(interval);let seconds=steps.reduce((a,s)=>a+s.time,0);data.session=null;data.history.unshift({date:new Date().toISOString(),name:plan().name,seconds,week:week()});save();cue();speak('Treino concluído! Muito bem.');alert('🥊 Treino concluído! Seu progresso foi registrado.');resetSession();refreshHome();tab('progressPage')}
-function resetSession(){clearInterval(interval);running=false;started=false;completed=false;steps=stepsFor();idx=0;remaining=steps[0].time;data.session=null;save();render()}
-function checkpoint(){data.session=started?{selected:data.selected,week:week(),idx,remaining,updatedAt:new Date().toISOString()}:null;save()}
-function restoreSession(){const c=data.session;if(!c||!Number.isInteger(c.idx)||!Number.isFinite(c.remaining)||c.selected<0||c.selected>=plans.length)return;data.selected=c.selected;data.weekOverride=c.week;steps=stepsFor();if(c.idx<0||c.idx>=steps.length)return;idx=c.idx;remaining=Math.max(0,Math.min(steps[idx].time,Math.ceil(c.remaining)));started=true;running=false;render();$('resumeNotice').textContent='Treino interrompido recuperado. Toque em Continuar.';}
 
-$('play').onclick=start;$('next').onclick=()=>advance(false);$('previous').onclick=()=>{pause();idx=Math.max(0,idx-1);remaining=steps[idx].time;checkpoint();render()};
-const demoSVG=$('stage').querySelector('svg').cloneNode(true);$('demoStage').replaceChild(demoSVG,$('demoStage').querySelector('svg'));function demo(k){$('demoTitle').textContent=moves[k].name;$('demoTip').textContent=moves[k].tip;$('demoStage').className='stage '+moves[k].anim;document.querySelectorAll('[data-move]').forEach(b=>b.classList.toggle('selected',b.dataset.move===k))}$('libraryMoves').innerHTML=Object.entries(moves).filter(([k])=>k!=='rest').map(([k,m])=>`<button class="workout" style="margin:8px 0;width:100%" data-move="${k}"><span>${m.name}</span><span>Ver ›</span></button>`).join('');document.querySelectorAll('[data-move]').forEach(b=>b.onclick=()=>demo(b.dataset.move));demo('jab');
-function renderProgress(){$('totalDone').textContent=data.history.length+' sessões';$('history').innerHTML=data.history.length?data.history.slice(0,40).map(x=>`<li>${new Date(x.date).toLocaleDateString('pt-BR')} · ${x.name} · ${Math.round(x.seconds/60)} min</li>`).join(''):'<li>Nenhum treino concluído ainda.</li>';$('voice').checked=data.preferences.voice;$('sound').checked=data.preferences.sound;$('vibration').checked=data.preferences.vibration;$('weekButtons').innerHTML=Array.from({length:6},(_,i)=>`<button data-week="${i+1}" class="${week()===i+1?'active':''}">${i+1}</button>`).join('');document.querySelectorAll('[data-week]').forEach(b=>b.onclick=()=>{data.weekOverride=+b.dataset.week;save();resetSession();refreshHome();renderProgress()})}['voice','sound','vibration'].forEach(id=>$(id).onchange=e=>{data.preferences[id]=e.target.checked;save()});$('clearHistory').onclick=()=>{if(confirm('Apagar todo o histórico de treinos?')){data.history=[];save();renderProgress();refreshHome()}};
-$('exportBackup').onclick=()=>{checkpoint();const payload={app:'boxing-fit',version:1,exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='boxing-fit-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)};
-$('importBackup').onclick=()=>$('backupFile').click();
-$('backupFile').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{if(f.size>2e6)throw Error('Arquivo muito grande');const obj=JSON.parse(await f.text());if(obj.app!=='boxing-fit'||!obj.data||!Array.isArray(obj.data.history)||!obj.data.preferences||typeof obj.data.start!=='number')throw Error('Formato inválido');if(!confirm('Restaurar este backup? O histórico atual será substituído.'))return;pause();data={...obj.data};if(!save())throw Error('Falha ao salvar no navegador');restoreSession();refreshHome();renderProgress();alert('Backup restaurado com sucesso.')}catch(err){alert('Não foi possível restaurar: '+err.message)}finally{e.target.value=''}};
-window.addEventListener('pagehide',()=>{if(running)pause();else checkpoint()});document.addEventListener('visibilitychange',()=>{if(document.hidden&&running)pause()});restoreSession();refreshHome();render();
+.today{border-color:#ffc94e55;background:linear-gradient(160deg,#232c3d,#192231 60%)}
+.today h2{font-size:22px}
+.setup{border-color:#e23c3d88}
+.weekstrip{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px}
+.day{background:#1b2636;border-radius:12px;padding:8px 2px;text-align:center;border:1px solid transparent;min-height:72px}
+.day small{display:block;color:#aab5c6;font-size:11px}
+.day span{display:block;font-size:12px;margin:4px 0;line-height:1.25;word-break:break-all}
+.day i{font-style:normal;font-size:11px;color:#ffc94e}
+.day.now{border-color:#ffc94e}
+.day.done{background:#2a3423}
+.phases{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin:12px 0 8px}
+.ph{background:#1b2636;border-radius:10px;padding:7px 2px;text-align:center}
+.ph b{display:block;font-size:16px}
+.ph small{font-size:10px;color:#aab5c6}
+.ph.done{background:#30402a}.ph.done b{color:#9fdc7c}
+.ph.now{background:#3a3520;outline:2px solid #ffc94e}.ph.now b{color:#ffc94e}
+.blocks{display:flex;gap:4px;margin:10px 0 0}
+.blk{border-radius:8px;background:#1b2636;padding:6px 6px;font-size:11px;color:#8d98aa;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.blk.on{color:#12151d;font-weight:800}
+.blk.tech.on{background:#7ba7d9}.blk.calls.on{background:#ffc94e}.blk.burst.on{background:#e23c3d;color:#fff}
+.blk.past{opacity:.45}
+.callout{display:flex;flex-direction:column;align-items:center;margin:-4px 0 4px;padding:10px;border-radius:16px;background:#2a2a1d;border:1px solid #ffc94e66}
+.callout b{font-size:34px;letter-spacing:-.02em;color:#ffc94e;line-height:1.05}
+.callout span{font-size:13px;color:#e3e8f3;margin-top:2px}
+.callout.burst{background:#3a1c1e;border-color:#e23c3d88}.callout.burst b{color:#ff8a82}
+.tip.tall{border-left-color:#7ba7d9;margin-top:8px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.chip{background:#263145;color:#e3e8f3;border:1px solid #364155;border-radius:99px;padding:8px 12px;font-size:13px;font-weight:650}
+.chip.on{background:#ffc94e;color:#12151d;border-color:#ffc94e}
+.form{display:grid;gap:10px;margin-top:10px}
+.form label{display:flex;flex-direction:column;gap:5px;font-size:13px;color:#aab5c6}
+.form input,.form select{background:#0f1622;color:#f5f7fc;border:1px solid #364155;border-radius:12px;padding:11px 12px;font-size:16px}
+.sched{display:grid;grid-template-columns:34px repeat(7,1fr);gap:4px;margin-top:8px;align-items:center}
+.sched .h{text-align:center;font-size:12px;color:#aab5c6}
+.cell{padding:0;height:36px;border-radius:9px;background:#1b2636;border:1px solid #2a3649;color:#ffc94e;font-size:14px}
+.cell.on{background:#3a3520;border-color:#ffc94e}
+.modal{position:fixed;inset:0;background:#000a;z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#192231;border:1px solid #2a3649;border-radius:22px 22px 0 0;padding:20px 18px max(20px,env(safe-area-inset-bottom));width:100%;max-width:600px;max-height:92vh;overflow:auto}
+.rpe{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}
+.rpe button{padding:12px 0;background:#263145;color:#fff}
+.rpe button.on{outline:3px solid #fff}
+.rpe .r1,.rpe .r2,.rpe .r3{background:#2c5a3a}.rpe .r4,.rpe .r5,.rpe .r6{background:#5b5a2a}.rpe .r7,.rpe .r8{background:#7a4a24}.rpe .r9,.rpe .r10{background:#7c2a2a}
+.bars{display:flex;gap:8px;align-items:flex-end;height:120px;margin:12px 0 6px}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar i{display:block;width:100%;background:#ffc94e;border-radius:6px 6px 2px 2px;min-height:2px}
+.bar b{font-size:11px;margin-top:3px}.bar small{font-size:10px;color:#8d98aa}
+.toast{position:fixed;left:16px;right:16px;bottom:calc(84px + env(safe-area-inset-bottom));max-width:568px;margin:auto;background:#ffc94e;color:#12151d;font-weight:700;padding:13px 15px;border-radius:14px;z-index:30;box-shadow:0 8px 24px #0008}
+.weekbuttons button.active{background:#ffc94e;color:#141820}
+.unlock{background:#1f2a1c;border:1px solid #4d6b3a;color:#cfe8bd;border-radius:12px;padding:10px 12px;font-size:14px;margin:4px 0 14px}
+.lessons{display:grid;gap:6px;margin-top:10px}
+.lesson{display:flex;gap:10px;align-items:center;background:#1b2636;border-radius:12px;padding:9px 11px;font-size:14px;color:#aab5c6}
+.lesson b{width:26px;height:26px;border-radius:99px;background:#263145;display:grid;place-items:center;font-size:12px;flex:none;color:#e3e8f3}
+.lesson small{color:#7f8aa0}
+.lesson.done{color:#cfe8bd}.lesson.done b{background:#3c5a2c}
+.lesson.now{background:#2a2a1d;color:#fff;outline:1px solid #ffc94e}.lesson.now b{background:#ffc94e;color:#12151d}
+.keys{margin:6px 0 8px;padding-left:18px;color:#dbe2ec;font-size:14px;line-height:1.5}
+.keys li.err{color:#ffb1a9;list-style:none;margin-left:-18px}
+#demoErrors li{list-style:none;margin-left:-18px}
+.skills,.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}
+.sk,.bdg{background:#1b2636;border-radius:12px;padding:9px 4px;text-align:center;opacity:.55}
+.sk b,.bdg b{display:block;font-size:17px}
+.sk small,.bdg small{font-size:10.5px;color:#cbd3e1;line-height:1.2;display:block;margin-top:3px}
+.sk.on,.bdg.on{opacity:1;background:#2a2a1d;outline:1px solid #ffc94e66}
+.sk.on b{color:#ffc94e}
+.quiz{position:fixed;inset:0;background:#0c111b;z-index:25;overflow:auto;padding:max(16px,env(safe-area-inset-top)) 18px 30px}
+.quiz>div{max-width:560px;margin-left:auto;margin-right:auto}
+.qtop{display:flex;gap:12px;align-items:center}
+.qtop button{padding:8px 13px}
+.qopts{display:grid;gap:10px;margin-top:16px}
+.qopt{background:#192231;border:2px solid #2a3649;color:#f5f7fc;text-align:left;padding:16px;font-weight:650}
+.qopt.on{border-color:#ffc94e;background:#2a2a1d}
+.qdays{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:16px}
+.qday{padding:14px 0;background:#192231;border:2px solid #2a3649;color:#f5f7fc;font-size:13px}
+.qday.on{border-color:#ffc94e;background:#ffc94e;color:#12151d}
+.form input{width:100%}
+
+.day.planned{border-color:#364155}
+</style><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./icon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Boxing Fit"><script type="importmap">{"imports":{"three":"./boxing-coach-3d/vendor/three.module.min.js","three/addons/":"./boxing-coach-3d/vendor/addons/"}}</script>
+<script type="module" src="./boxing-coach-3d/integration/boxing-fit-3d.js"></script>
+</head><body>
+<main class="shell">
+<div class="top"><div class="brand">🥊 BOXING FIT</div><div class="pill" id="streakPill">🔥 0 dias</div></div>
+
+<section id="home">
+  <h1 class="hero" id="hello">Bom treino.</h1>
+  <p class="muted small" id="helloSub">Aprenda shadow boxing em casa, uma aula por dia.</p>
+
+  <div class="card today" id="todayCard">
+    <div class="row"><span class="label" id="todayLabel">Aula de hoje</span><span class="badge" id="todayMin">20 min</span></div>
+    <p class="small muted" id="journeyName" style="margin:10px 0 2px"></p>
+    <h2 id="todayTitle" style="margin-top:0">Guarda e base</h2>
+    <p class="muted small" id="todayWhy"></p>
+    <div class="unlock hidden" id="todayUnlock"></div>
+    <button style="width:100%" id="startToday">Começar →</button>
+    <div class="progress" style="margin-top:14px"><div class="fill" id="journeyBar"></div></div>
+    <p class="small muted" id="journeyText" style="margin-bottom:0"></p>
+  </div>
+
+  <div class="card">
+    <div class="row"><span class="label">Sua semana</span><span class="small muted" id="weekCount">0 / 3 aulas</span></div>
+    <div class="weekstrip" id="weekStrip"></div>
+  </div>
+
+  <div class="card">
+    <div class="label">Aulas da jornada</div>
+    <div class="lessons" id="lessonList"></div>
+  </div>
+
+  <div class="card">
+    <div class="label">Treinos rápidos</div>
+    <p class="muted small">Fora do plano, quando quiser. Usam só os golpes que você já aprendeu.</p>
+    <div class="workouts" id="quickList"></div>
+  </div>
+
+  <div class="card">
+    <div class="label">Monte seu treino</div>
+    <div class="form">
+      <label>Duração<select id="cMin"><option value="10">10 min</option><option value="15">15 min</option><option value="20" selected>20 min</option><option value="30">30 min</option></select></label>
+      <label>Foco<select id="cFocus"><option value="combos">Combinações</option><option value="defesa">Defesa e esquivas</option><option value="cardio">Cardio e explosão</option><option value="tecnica">Técnica lenta</option></select></label>
+      <label>Round<select id="cRound"><option value="90">1:30</option><option value="120" selected>2:00</option><option value="180">3:00</option></select></label>
+    </div>
+    <button class="alt" style="width:100%;margin-top:12px" id="startCustom">Treinar agora →</button>
+  </div>
+</section>
+
+<section id="train" class="hidden">
+  <p class="muted small" id="resumeNotice"></p>
+  <div class="row"><span class="label" id="phase">AQUECIMENTO</span><span class="badge" id="position">1 / 1</span></div>
+  <h2 id="moveTitle" style="margin-top:12px"></h2>
+  <p class="muted small" id="instruction"></p>
+  <ul class="keys hidden" id="keyPoints"></ul>
+  <div class="blocks hidden" id="blocks"></div>
+  <div class="stage rest" id="stage" role="img" aria-label="Treinador virtual">
+    <svg viewBox="0 0 270 300" aria-hidden="true"><defs><linearGradient id="shirt" x1="0" x2="1"><stop stop-color="#f7c642"/><stop offset="1" stop-color="#d88d2e"/></linearGradient></defs><ellipse cx="135" cy="281" rx="76" ry="11" fill="#080d16" opacity=".55"/><g id="coach"><g id="coachLegs"><path id="legBack" fill="none" stroke="#526b92" stroke-width="22" stroke-linecap="round"/><path id="legFront" fill="none" stroke="#354e75" stroke-width="23" stroke-linecap="round"/><path id="shoeBack" fill="none" stroke="#f0b945" stroke-width="13" stroke-linecap="round"/><path id="shoeFront" fill="none" stroke="#f0b945" stroke-width="13" stroke-linecap="round"/></g><path id="body" fill="url(#shirt)" stroke="#c68c39" stroke-width="2"/><path id="armBack" fill="none" stroke="#b97e62" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><circle id="gloveBack" r="16" fill="#e65764" stroke="#a72c42" stroke-width="2"/><path id="armFront" fill="none" stroke="#c99575" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><circle id="gloveFront" r="17" fill="#fa5c69" stroke="#ae3045" stroke-width="2"/><rect id="neck" width="15" height="20" rx="6" fill="#b98568"/><circle id="head" r="30" fill="#c99575"/><path id="hair" fill="#1e293b"/><path id="eyes" stroke="#1e293b" stroke-width="3" stroke-linecap="round" fill="none"/></g></svg>
+    <div class="caption" id="caption"></div>
+  </div>
+  <div class="callout hidden" id="callout"><b id="callNum">1-2</b><span id="callName">Jab, direto</span></div>
+  <div class="clock" id="clock">05:00</div>
+  <div class="progress"><div class="fill" id="stepBar"></div></div>
+  <p class="muted small row"><span id="upNext"></span><span id="totalLeft"></span></p>
+  <div class="actions">
+    <button class="alt" id="previous">← Voltar</button>
+    <button id="play">▶ Iniciar</button>
+    <button class="alt" id="next">Pular →</button>
+  </div>
+  <p class="tip" id="tip"></p>
+  <p class="tip tall hidden" id="personalTip"></p>
+  <button class="ghost" style="width:100%;margin-top:12px" id="exit">Sair do treino</button>
+</section>
+
+<section id="library" class="hidden">
+  <h1 class="hero">Golpes e técnica.</h1>
+  <p class="muted">Cada golpe tem um número. É assim que o treinador chama as combinações.</p>
+  <div class="card">
+    <div class="label">Demonstração</div>
+    <h2 id="demoTitle">Jab</h2>
+    <div class="stage jab" id="demoStage">
+      <svg viewBox="0 0 270 300" aria-hidden="true"><use href="#"/></svg>
+      <div class="caption">Animação ilustrativa, não substitui orientação presencial</div>
+    </div>
+    <p class="tip" id="demoTip"></p>
+    <ul class="keys" id="demoErrors"></ul>
+  </div>
+  <div id="libraryMoves"></div>
+</section>
+
+<section id="progressPage" class="hidden">
+  <h1 class="hero">Sua evolução.</h1>
+  <div class="grid">
+    <div class="stat"><strong id="sessions">0</strong><span>treinos</span></div>
+    <div class="stat"><strong id="minutes">0</strong><span>minutos</span></div>
+    <div class="stat"><strong id="kcal">–</strong><span id="kcalLabel">kcal estimadas</span></div>
+  </div>
+
+  <div class="card">
+    <div class="row"><span class="label">Golpes aprendidos</span><span class="small muted" id="skillCount">0 / 12</span></div>
+    <div class="skills" id="skillGrid"></div>
+  </div>
+
+  <div class="card">
+    <div class="label">Conquistas</div>
+    <div class="badges" id="badgeGrid"></div>
+  </div>
+
+  <div class="card">
+    <div class="label">Carga semanal</div>
+    <p class="muted small">Minutos × esforço percebido. Subir mais de 30% de uma semana para outra aumenta o risco de lesão.</p>
+    <div class="bars" id="loadBars"></div>
+    <p class="small" id="loadNote"></p>
+  </div>
+
+  <div class="card">
+    <div class="label">Histórico</div>
+    <h2 id="totalDone">0 sessões</h2>
+    <ol class="history" id="history"></ol>
+    <button class="ghost" id="clearHistory">Apagar histórico</button>
+  </div>
+
+  <div class="card">
+    <div class="label">Seu plano</div>
+    <p class="small" id="planSummary"></p>
+    <div class="chips" id="limitChips"></div>
+    <p class="note">Dores marcadas no fim de um treino ficam ativas por 7 dias e adaptam os treinos automaticamente.</p>
+    <button class="alt" style="width:100%;margin-top:10px" id="redoQuiz">Refazer o questionário</button>
+  </div>
+
+  <div class="card">
+    <div class="label">Preferências</div>
+    <label class="toggle"><input type="checkbox" id="voice" checked> Orientações e combinações por voz</label>
+    <label class="toggle"><input type="checkbox" id="sound" checked> Sinal sonoro nas transições</label>
+    <label class="toggle"><input type="checkbox" id="vibration" checked> Vibração, quando disponível</label>
+    <p class="note">A tela deve permanecer aberta para o cronômetro funcionar de forma confiável.</p>
+  </div>
+
+  <div class="card">
+    <div class="label">Proteção dos seus dados</div>
+    <h2>Backup e recuperação</h2>
+    <p class="muted small">O treino é salvo neste navegador. Exporte um backup para o app Arquivos ou iCloud Drive.</p>
+    <p class="small" id="saveStatus" role="status">Verificando armazenamento…</p>
+    <div class="actions"><button id="exportBackup">⬇ Exportar backup</button><button class="alt" id="importBackup">⬆ Restaurar backup</button></div>
+    <input id="backupFile" type="file" accept=".json,application/json" style="display:none">
+  </div>
+</section>
+</main>
+
+<div class="quiz hidden" id="quiz" role="dialog" aria-modal="true">
+  <div class="qtop"><button class="ghost" id="qBack">←</button><div class="progress" style="flex:1"><div class="fill" id="qBar"></div></div></div>
+  <div id="qBody"></div>
+</div>
+
+<div class="modal hidden" id="finishModal" role="dialog" aria-modal="true">
+  <div class="sheet">
+    <div class="label">Treino concluído</div>
+    <h2 id="finishTitle">Como foi?</h2>
+    <p class="muted small">Esforço da sessão inteira, de 1 a 10. É isso que ajusta o próximo treino.</p>
+    <div class="rpe" id="rpeGrid"></div>
+    <p class="small" id="rpeDesc">&nbsp;</p>
+    <p class="label" style="margin-top:12px">Sentiu alguma dor?</p>
+    <div class="chips" id="painChips"></div>
+    <button style="width:100%;margin-top:16px" id="saveFinish" disabled>Salvar treino</button>
+  </div>
+</div>
+<div class="toast hidden" id="toast"></div>
+
+<nav class="tabs" aria-label="Navegação"><button data-tab="home" class="active"><b>⌂</b>Início</button><button data-tab="train"><b>🥊</b>Treinar</button><button data-tab="library"><b>◉</b>Golpes</button><button data-tab="progressPage"><b>▥</b>Evolução</button></nav>
+
+<script>
+// ===================== Boxing Fit · aprenda shadow boxing =====================
+const $ = id => document.getElementById(id), key = 'boxingFitV3';
+const DAY = 864e5;
+let data;
+try { data = JSON.parse(localStorage.getItem(key)) || {}; } catch (e) { data = {}; }
+
+function defaultProfile() {
+  return { name: '', goal: 'tecnica', exp: 'zero', stance: 'orthodox', days: [1, 3, 5], minutes: 20, heightCm: null, weightKg: null, limits: {}, onboarded: false };
+}
+function migrate() {
+  data.start ||= Date.now();
+  data.history ||= [];
+  data.preferences ||= { voice: true, sound: true, vibration: true };
+  if (!data.v || data.v < 5) {
+    const old = data.profile || {};
+    data.profile = { ...defaultProfile(), name: old.name || '', heightCm: old.heightCm || null, stance: old.stance || 'orthodox', limits: old.limits || {} };
+    data.journey = { id: 'j1', lesson: 0 };
+    data.learned = [];
+    data.pains = data.pains || {};
+    data.bias = 0; data.callsTotal = 0; data.session = null;
+    data.v = 5;
+  }
+  data.profile = { ...defaultProfile(), ...data.profile };
+  data.pains ||= {}; data.learned ||= []; data.journey ||= { id: 'j1', lesson: 0 };
+}
+migrate();
+const save = () => {
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+    const el = $('saveStatus'); if (el) el.textContent = '✓ Salvo neste navegador · ' + new Date().toLocaleTimeString('pt-BR');
+    return true;
+  } catch (e) { const el = $('saveStatus'); if (el) el.textContent = '⚠ Não foi possível salvar. Exporte um backup.'; return false; }
+};
+save();
+const P = () => data.profile;
+
+// ===================== CONTEÚDO: GOLPES E AULAS =====================
+// moves = animações do treinador 3D que a habilidade libera para as combinações chamadas.
+const SKILLS = {
+  guard: { name: 'Guarda e base', num: '', group: 'Movimentação', svg: 'step', moves: ['guard', 'stepForward', 'stepBack'], seq: ['guard', 'stepForward', 'stepBack'],
+    tip: 'Pés na largura dos ombros, pé de trás a 45°, joelhos soltos. Mãos no rosto, cotovelos fechados, queixo baixo.',
+    keys: ['Peso dividido entre as duas pernas, na ponta dos pés', 'Mão da frente na altura do olho, mão de trás encostada no queixo', 'Queixo escondido atrás do ombro da frente'],
+    errors: ['Pés na mesma linha (perde o equilíbrio)', 'Pernas esticadas e mãos baixas'],
+    tallTip: 'Pessoas altas tendem a ficar com as pernas esticadas: dobre bem os joelhos para não deixar o queixo exposto.' },
+  jab: { name: 'Jab', num: '1', group: 'Golpes', svg: 'jab', moves: ['jab'], seq: ['jab'],
+    tip: 'Mão da frente em linha reta, gira o punho no fim, volta pelo mesmo caminho.',
+    keys: ['O ombro da frente sobe e protege o queixo', 'O punho gira para baixo no fim do golpe', 'A mão volta para o rosto tão rápido quanto saiu'],
+    errors: ['Baixar a mão antes de socar', 'Abrir o cotovelo para o lado'],
+    tallTip: 'Seu alcance é uma vantagem: acerte no limite da distância, sem inclinar o tronco.' },
+  cross: { name: 'Direto', num: '2', group: 'Golpes', svg: 'direct', moves: ['cross'], seq: ['cross'],
+    tip: 'Mão de trás em linha reta. O calcanhar de trás sobe e gira, o quadril empurra o ombro.',
+    keys: ['Gire o pé de trás como se apagasse um cigarro', 'Quadril e ombro giram juntos', 'A mão da frente fica colada no rosto'],
+    errors: ['Socar só com o braço, sem girar o quadril', 'Travar o cotovelo na extensão'] },
+  steps: { name: 'Passos e distância', num: '', group: 'Movimentação', svg: 'step', moves: ['stepLeft', 'stepRight'], seq: ['stepForward', 'stepBack', 'stepLeft', 'stepRight'],
+    tip: 'O pé do lado para onde você vai sai primeiro; o outro acompanha. Nunca cruze os pés.',
+    keys: ['Passos curtos, base sempre do mesmo tamanho', 'Frente: pé da frente primeiro. Trás: pé de trás primeiro', 'Guarda alta durante o movimento'],
+    errors: ['Cruzar os pés', 'Pular em vez de deslizar'] },
+  lhook: { name: 'Cruzado da frente', num: '3', group: 'Golpes', svg: 'hook', moves: ['leftHook'], seq: ['leftHook'],
+    tip: 'Golpe em arco curto com a mão da frente. Cotovelo na altura do ombro, gira o pé da frente.',
+    keys: ['Braço dobrado em cerca de 90°', 'O pé da frente gira junto com o quadril', 'A outra mão protege o queixo'],
+    errors: ['Abrir o braço como um tapa', 'Não girar o pé da frente'] },
+  slip: { name: 'Esquiva', num: '', group: 'Defesa', svg: 'slip', moves: ['slipLeft', 'slipRight'], seq: ['slipLeft', 'slipRight'],
+    tip: 'A cabeça sai da linha do golpe com joelhos e tronco juntos, uns 15 cm.',
+    keys: ['Movimento pequeno: só o suficiente para o golpe passar', 'Os joelhos ajudam, a coluna não entorta', 'Olhos sempre à frente'],
+    errors: ['Inclinar demais e perder o equilíbrio', 'Baixar as mãos ao esquivar'] },
+  block: { name: 'Bloqueio alto', num: '', group: 'Defesa', svg: 'combo', moves: ['blockHigh'], seq: ['blockHigh', 'cross'],
+    tip: 'Antebraços colados na testa, cotovelos fechados. Absorve e responde na hora.',
+    keys: ['Luvas na testa, não na frente dos olhos', 'Cotovelos fechados protegem o corpo', 'Responda logo depois do bloqueio'],
+    errors: ['Fechar os olhos', 'Ficar só bloqueando, sem responder'] },
+  uppercut: { name: 'Uppercuts', num: '5 · 6', group: 'Golpes', svg: 'combo', moves: ['leftUppercut', 'rightUppercut'], seq: ['leftUppercut', 'rightUppercut'],
+    tip: 'Golpe de baixo para cima. Os joelhos dobram, o ombro desce um palmo e você sobe girando.',
+    keys: ['O cotovelo fica embaixo do punho', 'A força vem das pernas e do quadril', 'Golpe curto, a mão não desce até a cintura'],
+    errors: ['Abaixar a mão antes de socar (avisa o adversário)', 'Golpe longo demais'] },
+  roll: { name: 'Rolagem', num: '', group: 'Defesa', svg: 'squat', moves: ['rollLeft', 'rollRight'], seq: ['rollRight', 'rollLeft'],
+    tip: 'Passa por baixo do cruzado em U, descendo com as pernas.',
+    keys: ['Desce dobrando os joelhos, não as costas', 'O movimento desenha um U', 'Sobe já na guarda, pronto para socar'],
+    errors: ['Curvar a coluna e olhar para o chão', 'Descer em linha reta e subir no mesmo lugar'],
+    tallTip: 'Quem é alto precisa descer mais para a rolagem funcionar: flexione bem os joelhos.' },
+  rhook: { name: 'Cruzado de trás', num: '4', group: 'Golpes', svg: 'hook', moves: ['rightHook'], seq: ['rightHook'],
+    tip: 'Arco curto com a mão de trás. Gira o pé de trás e o quadril; o peso vai para a frente.',
+    keys: ['Calcanhar de trás sobe e gira', 'Cotovelo na altura do ombro', 'A mão da frente volta para o rosto'],
+    errors: ['Girar só o ombro', 'Deixar a mão da frente cair'] },
+  pivot: { name: 'Pivô', num: '', group: 'Movimentação', svg: 'step', moves: ['pivotLeft', 'pivotRight'], seq: ['jab', 'pivotLeft', 'pivotRight'],
+    tip: 'Gira sobre a ponta do pé da frente; o pé de trás varre o chão. Termina de frente para o alvo.',
+    keys: ['O pé da frente é o eixo', 'Giro de uns 45° a 90°', 'Guarda fechada durante o giro'],
+    errors: ['Girar sobre o calcanhar', 'Terminar de lado para o alvo'],
+    tallTip: 'O pivô cria ângulo sem perder a distância: perfeito para quem é mais alto.' },
+  balance: { name: 'Recuperar o equilíbrio', num: '', group: 'Movimentação', svg: 'step', moves: ['recoverBalance'], seq: ['recoverBalance', 'stepForward'],
+    tip: 'Desequilibrado, um passo curto reorganiza a base antes de qualquer golpe.',
+    keys: ['Primeiro a base, depois o golpe', 'Passo curto, não um salto', 'Mãos no rosto o tempo todo'],
+    errors: ['Socar desequilibrado', 'Abrir os braços para se equilibrar'] },
+};
+const SKILL_ORDER = ['guard', 'jab', 'cross', 'steps', 'lhook', 'slip', 'block', 'uppercut', 'roll', 'rhook', 'pivot', 'balance'];
+
+const COMBOS = {
+  c1: { num: '1', say: 'um', name: 'Jab', seq: ['jab'] },
+  c11: { num: '1-1', say: 'um, um', name: 'Jab dobrado', seq: ['jab', 'jab'] },
+  c12: { num: '1-2', say: 'um, dois', name: 'Jab, direto', seq: ['jab', 'cross'] },
+  c2: { num: '2', say: 'dois', name: 'Direto', seq: ['cross'] },
+  c112: { num: '1-1-2', say: 'um, um, dois', name: 'Jab, jab, direto', seq: ['jab', 'jab', 'cross'] },
+  cin1: { num: 'entra-1', say: 'entra, um', name: 'Passo à frente e jab', seq: ['stepForward', 'jab'] },
+  c1out: { num: '1-sai', say: 'um, sai', name: 'Jab e passo atrás', seq: ['jab', 'stepBack'] },
+  c12side: { num: '1-2-lado', say: 'um, dois, lado', name: 'Um-dois e saída lateral', seq: ['jab', 'cross', 'stepLeft'] },
+  c123: { num: '1-2-3', say: 'um, dois, três', name: 'Jab, direto, cruzado', seq: ['jab', 'cross', 'leftHook'] },
+  c32: { num: '3-2', say: 'três, dois', name: 'Cruzado, direto', seq: ['leftHook', 'cross'] },
+  c232: { num: '2-3-2', say: 'dois, três, dois', name: 'Direto, cruzado, direto', seq: ['cross', 'leftHook', 'cross'] },
+  c1232: { num: '1-2-3-2', say: 'um, dois, três, dois', name: 'Quatro golpes', seq: ['jab', 'cross', 'leftHook', 'cross'] },
+  cs2: { num: 'esquiva-2', say: 'esquiva, dois', name: 'Esquiva e direto', seq: ['slipRight', 'cross'], def: true },
+  c12s: { num: '1-2-esquiva', say: 'um, dois, esquiva', name: 'Um-dois e esquiva', seq: ['jab', 'cross', 'slipRight'], def: true },
+  css2: { num: 'esquiva-esquiva-2', say: 'esquiva, esquiva, dois', name: 'Dupla esquiva e direto', seq: ['slipLeft', 'slipRight', 'cross'], def: true },
+  cs23: { num: 'esquiva-2-3', say: 'esquiva, dois, três', name: 'Esquiva, direto, cruzado', seq: ['slipRight', 'cross', 'leftHook'], def: true },
+  cb2: { num: 'bloqueia-2', say: 'bloqueia, dois', name: 'Bloqueio e direto', seq: ['blockHigh', 'cross'], def: true },
+  cb12: { num: 'bloqueia-1-2', say: 'bloqueia, um, dois', name: 'Bloqueio e um-dois', seq: ['blockHigh', 'jab', 'cross'], def: true },
+  c52: { num: '5-2', say: 'cinco, dois', name: 'Uppercut e direto', seq: ['leftUppercut', 'cross'], shoulder: true },
+  c1632: { num: '1-6-3-2', say: 'um, seis, três, dois', name: 'Jab, uppercut, cruzado, direto', seq: ['jab', 'rightUppercut', 'leftHook', 'cross'], shoulder: true },
+  c1252: { num: '1-2-5-2', say: 'um, dois, cinco, dois', name: 'Jab, direto, uppercut, direto', seq: ['jab', 'cross', 'leftUppercut', 'cross'], shoulder: true },
+  c63: { num: '6-3', say: 'seis, três', name: 'Uppercut e cruzado', seq: ['rightUppercut', 'leftHook'], shoulder: true },
+  cr3: { num: 'rola-3', say: 'rola, três', name: 'Rolagem e cruzado', seq: ['rollRight', 'leftHook'], def: true, knee: true },
+  c12r32: { num: '1-2-rola-3-2', say: 'um, dois, rola, três, dois', name: 'Combo com rolagem', seq: ['jab', 'cross', 'rollRight', 'leftHook', 'cross'], def: true, knee: true },
+  c14: { num: '1-4', say: 'um, quatro', name: 'Jab e cruzado de trás', seq: ['jab', 'rightHook'] },
+  c34: { num: '3-4', say: 'três, quatro', name: 'Dois cruzados', seq: ['leftHook', 'rightHook'] },
+  c1piv: { num: '1-pivô', say: 'um, pivô', name: 'Jab e pivô', seq: ['jab', 'pivotLeft'], def: true },
+  c123piv: { num: '1-2-3-pivô', say: 'um, dois, três, pivô', name: 'Combo e pivô', seq: ['jab', 'cross', 'leftHook', 'pivotLeft'], def: true },
+};
+
+// Jornadas = sequência de aulas. Cada aula ensina uma habilidade (ou revisa) e libera combinações.
+const JOURNEYS = {
+  j1: { name: 'Aprenda Shadow Boxing', next: 'j2', lessons: [
+    { skill: 'guard', title: 'Guarda e base', why: 'Tudo no boxe começa aqui: base firme e mãos protegendo o rosto.' },
+    { skill: 'jab', title: 'O jab (1)', why: 'O golpe mais importante do boxe: mede a distância e abre caminho para os outros.' },
+    { skill: 'cross', title: 'O direto (2)', why: 'O golpe de potência: a força vem do pé de trás e do quadril.' },
+    { skill: 'steps', title: 'Passos e distância', why: 'Socar parado não é boxe: você vai golpear e se mover sem perder a base.' },
+    { skill: null, title: 'Revisão: um-dois em movimento', why: 'Juntar jab, direto e passos. Primeira aula com combinações chamadas do começo ao fim.' },
+    { skill: 'lhook', title: 'Cruzado da frente (3)', why: 'O primeiro golpe curvo: completa o famoso 1-2-3.' },
+    { skill: 'slip', title: 'Esquiva', why: 'Hora de defender: tirar a cabeça da linha e já responder.' },
+    { skill: 'block', title: 'Bloqueio alto', why: 'Quando não dá para esquivar, a guarda fecha e você responde.' },
+    { skill: null, title: 'Revisão: ataque e defesa', why: 'Combinações misturando golpes e defesa, como num round de verdade.' },
+    { skill: 'uppercut', title: 'Uppercuts (5 e 6)', why: 'Golpes de baixo para cima: completam o arsenal da curta distância.' },
+    { skill: 'roll', title: 'Rolagem', why: 'A defesa contra o cruzado: passar por baixo e voltar batendo.' },
+    { skill: null, title: 'Graduação: rounds completos', why: 'Tudo o que você aprendeu, em rounds no ritmo de um treino de academia.' },
+  ] },
+  j2: { name: 'Shadow Boxing Intermediário', next: null, lessons: [
+    { skill: 'rhook', title: 'Cruzado de trás (4)', why: 'O último golpe da numeração: fecha as combinações de quatro golpes.' },
+    { skill: 'pivot', title: 'Pivô', why: 'Criar ângulo depois de atacar, sem dar um passo para trás.' },
+    { skill: null, title: 'Combinações de quatro golpes', why: 'Volume e fluidez: 1-2-3-2, 1-6-3-2 e 1-2-5-2.' },
+    { skill: 'balance', title: 'Recuperar o equilíbrio', why: 'Lutar também é se reorganizar quando a base se perde.' },
+    { skill: null, title: 'Defesa e contra-ataque', why: 'Cada defesa termina com uma resposta.' },
+    { skill: null, title: 'Ritmo de 3 minutos', why: 'Rounds no tempo oficial do boxe.' },
+    { skill: null, title: 'Ângulos e saídas', why: 'Bater e não estar mais lá: pivô e saídas laterais.' },
+    { skill: null, title: 'Teste final', why: 'Rounds de 3 minutos com tudo o que você aprendeu.' },
+  ] },
+};
+
+const QUICK = [
+  { id: 'q_combos', icon: '🥊', name: 'Combinações em 10 min', min: 10, focus: 'combos', round: 120 },
+  { id: 'q_cardio', icon: '🔥', name: 'Cardio boxing 15 min', min: 15, focus: 'cardio', round: 120 },
+  { id: 'q_def', icon: '🛡️', name: 'Só defesa 10 min', min: 10, focus: 'defesa', round: 90 },
+  { id: 'q_tec', icon: '🎯', name: 'Técnica lenta 20 min', min: 20, focus: 'tecnica', round: 120 },
+  { id: 'q_full', icon: '⏱️', name: 'Round de academia 30 min', min: 30, focus: 'combos', round: 180 },
+];
+
+const DOW = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+const DOWL = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+const LIMITS = { shoulder: 'Ombro', wrist: 'Punho', knee: 'Joelho', lowback: 'Lombar' };
+const GOALS = { tecnica: 'Aprender a técnica', condicionamento: 'Ganhar condicionamento', emagrecer: 'Perder gordura', estresse: 'Aliviar o estresse' };
+const EXPS = { zero: 'Nunca treinei boxe', basico: 'Já fiz algumas aulas', regular: 'Treino ou já treinei com regularidade' };
+
+// ===================== PERSONALIZAÇÃO =====================
+function activeLimits() {
+  const lim = { ...P().limits };
+  for (const [k, t] of Object.entries(data.pains || {})) if (Date.now() - t < 7 * DAY) lim[k] = true;
+  return lim;
+}
+const noRisky = lim => lim.knee || lim.lowback;
+const isTall = () => (P().heightCm || 0) >= 188;
+const journey = () => JOURNEYS[data.journey.id];
+const lessonIdx = () => data.journey.lesson;
+const currentLesson = () => journey()?.lessons[lessonIdx()] || null;
+const lessonsDone = () => SKILL_ORDER.filter(s => data.learned.includes(s)).length;
+function unlockedMoves(extraSkill) {
+  const set = new Set(['guard', 'idle']);
+  for (const s of data.learned.concat(extraSkill ? [extraSkill] : [])) SKILLS[s]?.moves.forEach(m => set.add(m));
+  return set;
+}
+// quanto mais aulas concluídas, combinações mais longas e chamadas mais rápidas
+function progressLevel() {
+  const base = { zero: 0, basico: 1, regular: 2 }[P().exp] || 0;
+  return Math.min(4, base + Math.floor(data.learned.length / 4) + (data.journey.id !== 'j1' ? 1 : 0));
+}
+function comboPool(focus, extraSkill) {
+  const lim = activeLimits(), moves = unlockedMoves(extraSkill), lvl = progressLevel();
+  const maxLen = [2, 3, 3, 4, 5][lvl];
+  let ids = Object.keys(COMBOS).filter(id => COMBOS[id].seq.every(m => moves.has(m)) && COMBOS[id].seq.length <= maxLen);
+  if (noRisky(lim)) ids = ids.filter(id => !COMBOS[id].knee);
+  if (lim.shoulder) ids = ids.filter(id => !COMBOS[id].shoulder);
+  if (focus === 'defesa') { const d = ids.filter(id => COMBOS[id].def); if (d.length) ids = d; }
+  // aula com habilidade nova: as combinações com o golpe novo aparecem com o dobro de frequência
+  if (extraSkill) { const nw = ids.filter(id => COMBOS[id].seq.some(m => SKILLS[extraSkill].moves.includes(m))); ids = ids.concat(nw); }
+  return ids;
+}
+function filterSeq(seq) {
+  const lim = activeLimits();
+  let s = seq;
+  if (noRisky(lim)) s = s.filter(m => !['rollLeft', 'rollRight'].includes(m));
+  if (lim.shoulder) s = s.filter(m => !/Uppercut/.test(m));
+  return s.length ? s : ['guard'];
+}
+function weekStart(d = new Date()) { const x = new Date(d); x.setHours(0, 0, 0, 0); x.setDate(x.getDate() - (x.getDay() + 6) % 7); return x; }
+const sameDay = (a, b) => new Date(a).toDateString() === new Date(b).toDateString();
+const doneOn = d => data.history.some(h => sameDay(h.date, d));
+const isPlanDay = d => P().days.includes(new Date(d).getDay());
+// sequência: treinos nos dias do plano sem falhar nenhum (dias extras também contam)
+function streak() {
+  let n = 0; const now = Date.now();
+  for (let i = 0; i < 180; i++) {
+    const day = new Date(now - i * DAY);
+    if (isPlanDay(day)) { if (doneOn(day)) n++; else if (i > 0) break; }
+    else if (doneOn(day)) n++;
+  }
+  return n;
+}
+
+// ===================== MONTAGEM DO TREINO =====================
+// o = { kind: 'lesson' | 'quick' | 'custom', minutes, focus, round, name }
+let current = { kind: 'lesson' };
+function buildWorkout(o = current) {
+  const p = P(), lim = activeLimits();
+  const lesson = o.kind === 'lesson' ? currentLesson() : null;
+  const minutes = o.minutes || p.minutes;
+  const focus = o.focus || (p.goal === 'tecnica' || p.goal === 'estresse' ? 'tecnica_mix' : 'combos');
+  const lvl = progressLevel();
+  let round = o.round || ({ zero: 90, basico: 120, regular: 150 }[p.exp] || 120);
+  if (lesson && data.journey.id === 'j2' && lessonIdx() >= 5) round = 180;
+  if (lesson && /Graduação|Teste/.test(lesson.title)) round = Math.max(round, 150);
+  const rest = round >= 180 && lvl >= 3 ? 45 : 60;
+  const bias = data.bias || 0;
+  const callEvery = Math.max(3.5, 7 - lvl * 0.8 - (focus === 'cardio' ? 1 : 0) - (bias > 0 ? 0.7 : 0) + (bias < 0 ? 1 : 0) + (lim.shoulder ? 1.5 : 0));
+  const wantsBurst = (focus === 'cardio' || p.goal === 'condicionamento' || p.goal === 'emagrecer') && data.learned.includes('cross') && !lim.shoulder && bias >= 0 && focus !== 'tecnica';
+  const burst = wantsBurst ? (round >= 150 ? 30 : 20) + (bias > 0 ? 10 : 0) : 0;
+  const techShare = focus === 'tecnica' ? .8 : focus === 'tecnica_mix' ? .5 : lesson ? .45 : .3;
+  const steps = [];
+  const knee = noRisky(lim);
+  const canPunch = data.learned.includes('jab');
+  // aquecimento: escala com a duração
+  const warm = minutes <= 10 ? 1 : minutes <= 20 ? 2 : 3;
+  steps.push({ title: 'Aquecimento: articulações', time: 90, kind: 'warm', svg: 'march', seq: null, desc: 'Tornozelos, quadril, ombros e punhos. Círculos amplos e lentos.' });
+  if (warm >= 2) steps.push({ title: 'Aquecimento: ritmo de pés', time: 90, kind: 'warm', svg: 'step', seq: ['idle'], desc: knee ? 'Passos curtos para os lados e para a frente e para trás, sem saltos.' : 'Saltitos curtos na ponta dos pés, como pular corda sem corda.' });
+  if (warm >= 3 && canPunch) steps.push({ title: 'Aquecimento: sombra a 50%', time: 60, kind: 'warm', svg: 'combo', seq: data.learned.includes('cross') ? ['jab', 'cross'] : ['jab'], speed: 0.65, desc: 'Golpes devagar, foco em postura e respiração.' });
+  // aula: explicação em câmera lenta + prática guiada do golpe novo
+  if (lesson && lesson.skill) {
+    const sk = SKILLS[lesson.skill], prac = Math.min(round, 120);
+    steps.push({ title: `Aula: ${sk.name}${sk.num ? ' (' + sk.num + ')' : ''}`, time: minutes <= 10 ? 75 : 120, kind: 'lesson', svg: sk.svg, seq: filterSeq(sk.seq), speed: 0.5, keys: sk.keys, tallTip: sk.tallTip,
+      desc: sk.tip + ' Observe o treinador em câmera lenta e imite sem pressa.' });
+    steps.push({ title: `Prática: ${sk.name}`, time: prac, kind: 'round', svg: sk.svg, seq: filterSeq(sk.seq), speed: 0.8, tallTip: sk.tallTip, keys: sk.keys,
+      desc: 'Repita junto com o treinador. Qualidade antes de velocidade.', blocks: [{ type: 'tech', start: 0, end: prac }], pool: [], callEvery });
+    steps.push({ title: 'Descanso', time: 45, kind: 'rest', svg: 'rest', seq: null, desc: 'Respire. Agora o golpe novo entra nos rounds.' });
+  }
+  const used = steps.reduce((a, s) => a + s.time, 0);
+  const cool = minutes <= 10 ? 60 : 120;
+  // rounds que cabem no tempo escolhido
+  const avail = minutes * 60 - used - cool;
+  const nRounds = Math.max(1, Math.floor((avail + rest) / (round + rest)) - (bias < 0 ? 1 : 0));
+  const pool = comboPool(focus === 'tecnica_mix' ? 'combos' : focus, lesson?.skill);
+  const learned = (lesson?.skill ? [lesson.skill] : []).concat(data.learned.slice().reverse()).filter((v, i, a) => a.indexOf(v) === i && SKILLS[v]);
+  for (let i = 0; i < nRounds; i++) {
+    const sk = SKILLS[learned[i % Math.max(1, learned.length)] || 'guard'];
+    const lastRound = i === nRounds - 1;
+    const b = burst && (focus === 'cardio' || p.goal !== 'tecnica' || lastRound) ? burst : 0;
+    const callsTime = round - b, tech = pool.length ? Math.round(callsTime * techShare) : callsTime;
+    const blocks = [{ type: 'tech', start: 0, end: tech }];
+    if (callsTime - tech > 0) blocks.push({ type: 'calls', start: tech, end: callsTime });
+    if (b) blocks.push({ type: 'burst', start: callsTime, end: round });
+    steps.push({ title: `Round ${i + 1} · ${sk.name}`, time: round, kind: 'round', round: i + 1, svg: sk.svg, seq: filterSeq(sk.seq), tallTip: sk.tallTip,
+      desc: sk.tip + (blocks.some(x => x.type === 'calls') ? ' Depois, combinações chamadas pelo número.' : ''), blocks, pool, callEvery });
+    if (!lastRound) steps.push({ title: 'Descanso', time: rest, kind: 'rest', svg: 'rest', seq: null, desc: 'Ande devagar, solte os ombros e expire mais longo do que inspira.' });
+  }
+  steps.push({ title: 'Volta à calma', time: cool, kind: 'cool', svg: 'rest', seq: null, desc: 'Respiração lenta, alongamento de peitoral, ombros e panturrilha.' });
+  return steps;
+}
+const minutesOf = st => Math.round(st.reduce((a, s) => a + s.time, 0) / 60);
+
+// ===================== VOZ E SINAIS =====================
+function speak(t) {
+  if (!data.preferences.voice || !('speechSynthesis' in window)) return;
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = 'pt-BR'; u.rate = 1.08; speechSynthesis.speak(u); } catch (e) { }
+}
+let audioCtx;
+function cue(freq = 680, dur = .13) {
+  if (data.preferences.vibration && navigator.vibrate) navigator.vibrate(100);
+  if (!data.preferences.sound) return;
+  try {
+    audioCtx ||= new (window.AudioContext || window.webkitAudioContext)();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.frequency.value = freq; g.gain.value = .06; o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime + dur);
+  } catch (e) { }
+}
+
+// ===================== INÍCIO =====================
+function refreshHome() {
+  const p = P(), h = new Date().getHours(), st = streak();
+  $('hello').textContent = `${h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite'}${p.name ? ', ' + p.name : ''}.`;
+  $('streakPill').textContent = `🔥 ${st} ${st === 1 ? 'treino' : 'treinos'} seguidos`;
+  const j = journey(), L = currentLesson(), today = new Date();
+  const doneToday = doneOn(today), planToday = isPlanDay(today);
+  const nextDay = [1, 2, 3, 4, 5, 6, 7].map(i => new Date(today.getTime() + i * DAY)).find(isPlanDay);
+  const nextTxt = nextDay ? (nextDay.getDay() === 0 || nextDay.getDay() === 6 ? 'no ' : 'na ') + DOWL[nextDay.getDay()] : 'quando quiser';
+  if (j && L) {
+    $('journeyName').textContent = `${j.name} · Aula ${lessonIdx() + 1} de ${j.lessons.length}`;
+    $('todayTitle').textContent = L.title;
+    $('todayMin').textContent = `${minutesOf(buildWorkout({ kind: 'lesson' }))} min`;
+    if (doneToday) { $('todayLabel').textContent = 'Treino de hoje feito ✓'; $('todayWhy').textContent = `Próxima aula ${nextTxt}. Descansar também faz parte.`; $('startToday').textContent = 'Adiantar a próxima aula →'; }
+    else if (!planToday) { $('todayLabel').textContent = 'Hoje é descanso'; $('todayWhy').textContent = `Sua próxima aula é ${nextTxt}. Se estiver com vontade, dá para adiantar.`; $('startToday').textContent = 'Fazer a aula hoje →'; }
+    else { $('todayLabel').textContent = 'Aula de hoje'; $('todayWhy').textContent = L.why; $('startToday').textContent = 'Começar aula →'; }
+    const un = $('todayUnlock');
+    if (L.skill) { un.classList.remove('hidden'); un.innerHTML = `🔓 Você vai aprender: <b>${SKILLS[L.skill].name}${SKILLS[L.skill].num ? ' (' + SKILLS[L.skill].num + ')' : ''}</b>`; } else un.classList.add('hidden');
+    $('journeyBar').style.width = `${lessonIdx() / j.lessons.length * 100}%`;
+    $('journeyText').textContent = `${lessonIdx()} de ${j.lessons.length} aulas concluídas`;
+  } else {
+    $('journeyName').textContent = 'Jornadas concluídas';
+    $('todayLabel').textContent = doneToday ? 'Treino de hoje feito ✓' : 'Treino do dia'; $('todayTitle').textContent = 'Shadow boxing completo';
+    $('todayWhy').textContent = 'Você concluiu as duas jornadas. O treino do dia mistura tudo o que aprendeu, com combinações sempre novas.';
+    $('todayUnlock').classList.add('hidden'); $('startToday').textContent = 'Começar →';
+    $('todayMin').textContent = `${p.minutes} min`; $('journeyBar').style.width = '100%'; $('journeyText').textContent = 'Todas as aulas concluídas';
+  }
+  const ws = weekStart(); let strip = '', planned = 0, done = 0;
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(ws.getTime() + i * DAY), pl = isPlanDay(day), dn = doneOn(day);
+    if (pl) planned++; if (dn) done++;
+    strip += `<div class="day ${sameDay(day, today) ? 'now' : ''} ${dn ? 'done' : ''} ${pl ? 'planned' : ''}"><small>${DOW[day.getDay()]}</small><span>${day.getDate()}</span><i>${dn ? '✓' : pl ? '🥊' : ''}</i></div>`;
+  }
+  $('weekStrip').innerHTML = strip; $('weekCount').textContent = `${done} / ${planned} treinos`;
+  $('lessonList').innerHTML = j ? j.lessons.map((l, i) => `<div class="lesson ${i < lessonIdx() ? 'done' : i === lessonIdx() ? 'now' : ''}"><b>${i < lessonIdx() ? '✓' : i + 1}</b><span>${l.title}${l.skill ? '' : ' <small>revisão</small>'}</span></div>`).join('') : '<p class="muted small">Todas as aulas concluídas.</p>';
+  const canQuick = data.learned.includes('jab');
+  $('quickList').innerHTML = canQuick ? QUICK.map(q => `<button class="workout" data-quick="${q.id}"><span>${q.icon} ${q.name}<small>${q.focus === 'cardio' ? 'Explosão em todo round' : q.focus === 'defesa' ? 'Esquivas, bloqueios e contra-ataques' : q.focus === 'tecnica' ? 'Sem pressa, para fixar o movimento' : 'Combinações chamadas com os golpes que você sabe'}</small></span><span>›</span></button>`).join('')
+    : '<p class="muted small">Disponíveis depois da aula do jab (aula 2).</p>';
+  document.querySelectorAll('[data-quick]').forEach(b => b.onclick = () => { const q = QUICK.find(x => x.id === b.dataset.quick); openWorkout({ kind: 'quick', minutes: q.min, focus: q.focus, round: q.round, name: q.name }); });
+  $('startCustom').disabled = !canQuick;
+}
+$('startToday').onclick = () => openWorkout(currentLesson() ? { kind: 'lesson' } : { kind: 'quick', minutes: P().minutes, focus: 'combos', name: 'Treino do dia' });
+$('startCustom').onclick = () => openWorkout({ kind: 'custom', minutes: +$('cMin').value, focus: $('cFocus').value, round: +$('cRound').value, name: 'Treino montado' });
+function workoutName(o = current) { return o.kind === 'lesson' ? (currentLesson()?.title || 'Aula') : (o.name || 'Treino'); }
+function openWorkout(o) {
+  if (started && !completed && !confirm('Há um treino em andamento. Começar outro?')) { tab('train'); return; }
+  current = o; resetSession(); tab('train');
+}
+
+// ===================== TREINO =====================
+let steps = buildWorkout(), idx = 0, remaining = steps[0].time, running = false, deadline = 0, interval = null, started = false, completed = false;
+let call = { id: 0, combo: null, nextAt: 0, block: null, last: null }, callsThisSession = 0;
+const fmt = s => `${String(Math.floor(Math.max(0, s) / 60)).padStart(2, '0')}:${String(Math.max(0, s) % 60).padStart(2, '0')}`;
+const BLOCK_NAME = { tech: 'Técnica', calls: 'Combinações', burst: 'Explosão' };
+function elapsedInStep() { const s = steps[idx]; return s.time - (running ? Math.max(0, (deadline - Date.now()) / 1000) : remaining); }
+function blockAt(s, el) { return s.blocks ? (s.blocks.find(b => el >= b.start && el < b.end) || s.blocks[s.blocks.length - 1]) : null; }
+function renderBlocks(s, el) {
+  const box = $('blocks');
+  if (!s.blocks || s.blocks.length < 2) { box.classList.add('hidden'); return; }
+  box.classList.remove('hidden');
+  box.innerHTML = s.blocks.map(b => `<div class="blk ${b.type} ${el >= b.start && el < b.end ? 'on' : el >= b.end ? 'past' : ''}" style="flex:${b.end - b.start}"><span>${BLOCK_NAME[b.type]}</span></div>`).join('');
+}
+function sync3D(s, b) {
+  if (!window.BoxingFit3D) return;
+  const type = s.kind === 'round' ? (b ? b.type : 'tech') : s.kind === 'lesson' ? 'tech' : s.kind;
+  window.BoxingFit3D.sync({ key: current.kind + ':' + idx, title: s.title, move: s.svg, running, remaining, seq: s.seq, block: type,
+    call: call.combo ? { id: call.id, seq: call.combo.seq } : null, speed: s.speed || (type === 'warm' ? 0.75 : 1), stance: P().stance });
+}
+function render() {
+  const s = steps[idx], el = elapsedInStep(), b = blockAt(s, el);
+  const nR = steps.filter(x => x.round).length;
+  $('phase').textContent = s.round ? `ROUND ${s.round} / ${nR}` : { warm: 'AQUECIMENTO', rest: 'DESCANSO', cool: 'VOLTA À CALMA', lesson: 'AULA', round: 'PRÁTICA' }[s.kind] || '';
+  $('position').textContent = `${idx + 1} / ${steps.length}`;
+  $('moveTitle').textContent = s.title; $('instruction').textContent = s.desc;
+  const kp = $('keyPoints');
+  if (s.keys) { kp.innerHTML = s.keys.map(k => `<li>${k}</li>`).join(''); kp.classList.remove('hidden'); } else kp.classList.add('hidden');
+  $('clock').textContent = fmt(remaining);
+  $('stepBar').style.width = `${100 * (1 - remaining / s.time)}%`;
+  $('upNext').textContent = idx < steps.length - 1 ? 'Próximo: ' + steps[idx + 1].title : 'Última etapa';
+  $('totalLeft').textContent = 'Restam ' + fmt(steps.slice(idx + 1).reduce((a, v) => a + v.time, remaining));
+  $('play').textContent = running ? 'Ⅱ Pausar' : started ? '▶ Continuar' : '▶ Iniciar';
+  $('previous').disabled = idx === 0;
+  setStage($('stage'), s.svg);
+  renderBlocks(s, el);
+  const co = $('callout');
+  if (b && b.type === 'calls' && call.combo) { co.classList.remove('hidden', 'burst'); $('callNum').textContent = call.combo.num; $('callName').textContent = call.combo.name; }
+  else if (b && b.type === 'burst') { co.classList.remove('hidden'); co.classList.add('burst'); $('callNum').textContent = '1-2 rápido'; $('callName').textContent = 'Velocidade, sem travar o cotovelo'; }
+  else co.classList.add('hidden');
+  $('caption').textContent = s.kind === 'lesson' ? 'Câmera lenta · imite o movimento' : s.kind === 'round' ? (b?.type === 'calls' ? 'Ouça o número e execute' : b?.type === 'burst' ? 'Máxima velocidade com técnica' : 'Imite o treinador') : s.kind === 'rest' ? 'Respire e recupere' : '';
+  $('tip').textContent = tipFor(s);
+  const pt = $('personalTip');
+  if (s.tallTip && isTall()) { pt.textContent = '📏 ' + s.tallTip; pt.classList.remove('hidden'); } else pt.classList.add('hidden');
+  sync3D(s, b);
+}
+function tipFor(s) {
+  const lim = activeLimits(), t = [];
+  if (s.kind === 'round' || s.kind === 'lesson') {
+    t.push('Depois de cada golpe, as mãos voltam ao rosto.');
+    if (lim.shoulder) t.push('Ombro em cuidado: golpes a 60%, sem estender totalmente.');
+    if (lim.knee) t.push('Joelho em cuidado: base mais curta, sem descer muito.');
+    if (lim.lowback) t.push('Lombar em cuidado: abdômen firme, gire pelo quadril.');
+    if (lim.wrist) t.push('Punho: no shadow boxing não há impacto. Mantenha o punho reto.');
+    return t.join(' ');
+  }
+  if (s.kind === 'rest') return 'Expire mais longo do que inspira. Mãos na cabeça abrem o peito.';
+  if (s.kind === 'warm') return 'Aquecer bem evita lesões no ombro e no cotovelo.';
+  return 'Movimentos lentos, sem dor.';
+}
+function setStage(stage, move) { stage.className = 'stage ' + (move || 'rest') + (!running && stage.id === 'stage' ? ' paused' : ''); }
+function pickCombo(s) { const pool = s.pool.filter(id => id !== call.last); const id = pool[Math.floor(Math.random() * pool.length)] || s.pool[0]; call.last = id; return COMBOS[id]; }
+function blockTick() {
+  const s = steps[idx]; if (s.kind !== 'round') return;
+  const el = elapsedInStep(), b = blockAt(s, el);
+  if (b && b.type !== call.block) {
+    call.block = b.type;
+    if (b.type === 'calls') { speak('Combinações! Escute o número.'); call.nextAt = el + 1.8; call.combo = null; cue(880); }
+    if (b.type === 'burst') { speak('Explosão! Um-dois rápido, sem travar o cotovelo.'); call.combo = null; cue(980, .25); }
+    if (b.type === 'tech') call.combo = null;
+    render();
+  }
+  if (b && b.type === 'calls' && el >= call.nextAt && s.pool.length) {
+    const c = pickCombo(s); call.combo = c; call.id++; callsThisSession++;
+    call.nextAt = el + s.callEvery + Math.max(0, c.seq.length - 2) * 0.7;
+    speak(c.say); render();
+  }
+}
+function resetCall() { call = { id: call.id, combo: null, nextAt: 0, block: null, last: null }; }
+function pause() { if (running) remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000)); running = false; clearInterval(interval); interval = null; checkpoint(); render(); }
+function start() {
+  if (running) { pause(); return; }
+  started = true; running = true; deadline = Date.now() + remaining * 1000; checkpoint();
+  if (!call.block) speak(steps[idx].title + '. ' + steps[idx].desc);
+  render(); interval = setInterval(tick, 200);
+}
+function tick() {
+  const r = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+  blockTick();
+  if (r !== remaining) { remaining = r; checkpoint(); render(); if (r === 10 && steps[idx].kind === 'round') cue(520, .08); }
+  if (r <= 0) advance(true);
+}
+function advance(auto = false) {
+  const was = running; clearInterval(interval); interval = null; running = false;
+  if (idx === steps.length - 1) { finish(); return; }
+  idx++; remaining = steps[idx].time; resetCall(); checkpoint(); cue(); render();
+  if (was) { running = true; deadline = Date.now() + remaining * 1000; interval = setInterval(tick, 200); speak(steps[idx].title + '. ' + steps[idx].desc); render(); }
+  else if (!auto) speak(steps[idx].title);
+}
+
+// ---------- fim do treino ----------
+const RPE_DESC = { 1: 'Muito leve', 2: 'Leve', 3: 'Leve, respiração solta', 4: 'Moderado', 5: 'Moderado, conversa possível', 6: 'Um pouco puxado', 7: 'Puxado, frases curtas', 8: 'Muito puxado', 9: 'Quase no limite', 10: 'Máximo' };
+let fin = { rpe: null, pains: new Set() };
+function finish() {
+  if (completed) return;
+  completed = true; running = false; clearInterval(interval);
+  speak('Treino concluído! Como foi o esforço?'); cue();
+  fin = { rpe: null, pains: new Set() };
+  $('finishTitle').textContent = workoutName();
+  $('rpeGrid').innerHTML = Array.from({ length: 10 }, (_, i) => `<button data-rpe="${i + 1}" class="r${i + 1}">${i + 1}</button>`).join('');
+  $('painChips').innerHTML = Object.entries(LIMITS).map(([k, n]) => `<button class="chip" data-pain="${k}">${n}</button>`).join('') + '<button class="chip on" data-pain="none">Nenhuma</button>';
+  $('rpeDesc').innerHTML = '&nbsp;'; $('saveFinish').disabled = true;
+  document.querySelectorAll('[data-rpe]').forEach(b => b.onclick = () => { fin.rpe = +b.dataset.rpe; document.querySelectorAll('[data-rpe]').forEach(x => x.classList.toggle('on', x === b)); $('rpeDesc').textContent = `${b.dataset.rpe} · ${RPE_DESC[b.dataset.rpe]}`; $('saveFinish').disabled = false; });
+  document.querySelectorAll('[data-pain]').forEach(b => b.onclick = () => {
+    const k = b.dataset.pain; if (k === 'none') fin.pains.clear(); else fin.pains.has(k) ? fin.pains.delete(k) : fin.pains.add(k);
+    document.querySelectorAll('[data-pain]').forEach(x => x.classList.toggle('on', x.dataset.pain === 'none' ? !fin.pains.size : fin.pains.has(x.dataset.pain)));
+  });
+  $('finishModal').classList.remove('hidden');
+}
+// estimativa: MET 6 nos rounds de shadow boxing, menor em aula, aquecimento e descanso
+function kcalFor(st) {
+  const kg = P().weightKg; if (!kg) return null;
+  return Math.round(st.reduce((a, s) => a + s.time / 60 * ((s.kind === 'round' ? 6 : s.kind === 'lesson' ? 3.5 : s.kind === 'warm' ? 4 : 2.5) * 3.5 * kg / 200), 0));
+}
+$('saveFinish').onclick = () => {
+  const seconds = steps.reduce((a, s) => a + s.time, 0), rpe = fin.rpe, pains = [...fin.pains];
+  const L = current.kind === 'lesson' ? currentLesson() : null;
+  const entry = { date: new Date().toISOString(), kind: current.kind, name: workoutName(), seconds, rpe, pains, load: Math.round(seconds / 60 * rpe), kcal: kcalFor(steps), calls: callsThisSession, journey: data.journey.id, lesson: L ? lessonIdx() : null };
+  data.history.unshift(entry); data.callsTotal = (data.callsTotal || 0) + callsThisSession;
+  pains.forEach(k => data.pains[k] = Date.now());
+  // intensidade se ajusta pelo esforço: esforço 9+ ou dor alivia; dois treinos fáceis seguidos endurecem
+  const last2 = data.history.slice(0, 2).map(h => h.rpe).filter(Boolean);
+  data.bias = rpe >= 9 || pains.length ? -1 : last2.length === 2 && last2.every(r => r <= 4) ? 1 : 0;
+  let msg;
+  if (L) {
+    if (L.skill && !data.learned.includes(L.skill)) data.learned.push(L.skill);
+    data.journey.lesson++;
+    msg = L.skill ? `🔓 ${SKILLS[L.skill].name} aprendido! Ele já entra nas combinações dos próximos treinos.` : 'Revisão concluída!';
+    if (data.journey.lesson >= journey().lessons.length) {
+      const nx = journey().next;
+      msg = `🏆 Jornada "${journey().name}" concluída!` + (nx ? ` Próxima: ${JOURNEYS[nx].name}.` : '');
+      data.journey = nx ? { id: nx, lesson: 0 } : { id: 'free', lesson: 0 };
+    }
+  } else msg = 'Treino registrado!';
+  if (rpe >= 9) msg += ' Esforço muito alto: o próximo treino vem um pouco mais leve.';
+  else if (data.bias > 0) msg += ' Dois treinos fáceis seguidos: o próximo vem mais intenso.';
+  if (pains.length) msg += ` Dor registrada (${pains.map(k => LIMITS[k].toLowerCase()).join(', ')}): os próximos 7 dias vêm adaptados.`;
+  newBadges().forEach(b => msg += ` Nova conquista: ${b.icon} ${b.name}.`);
+  data.session = null; save();
+  $('finishModal').classList.add('hidden');
+  current = { kind: 'lesson' };
+  resetSession(); renderLibrary(); refreshHome(); tab('home'); toast(msg);
+};
+function toast(t) { const el = $('toast'); el.textContent = t; el.classList.remove('hidden'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.add('hidden'), 7000); }
+
+function resetSession() {
+  clearInterval(interval); running = false; started = false; completed = false; callsThisSession = 0;
+  steps = buildWorkout(current); idx = 0; remaining = steps[0].time; resetCall(); data.session = null; save(); render();
+}
+function checkpoint() { data.session = started ? { current, idx, remaining, updatedAt: new Date().toISOString() } : null; save(); }
+function restoreSession() {
+  const c = data.session;
+  if (!c || !c.current || !Number.isInteger(c.idx) || !Number.isFinite(c.remaining)) return;
+  if (Date.now() - new Date(c.updatedAt).getTime() > 12 * 36e5) { data.session = null; save(); return; }
+  current = c.current; steps = buildWorkout(current); if (c.idx < 0 || c.idx >= steps.length) return;
+  idx = c.idx; remaining = Math.max(0, Math.min(steps[idx].time, Math.ceil(c.remaining))); started = true; running = false; render();
+  $('resumeNotice').textContent = 'Treino interrompido recuperado. Toque em Continuar.';
+}
+$('play').onclick = start;
+$('next').onclick = () => advance(false);
+$('previous').onclick = () => { pause(); idx = Math.max(0, idx - 1); remaining = steps[idx].time; resetCall(); checkpoint(); render(); };
+$('exit').onclick = () => { pause(); tab('home'); };
+function tab(t) {
+  document.querySelectorAll('main section').forEach(x => x.classList.toggle('hidden', x.id !== t));
+  document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
+  if (t === 'progressPage') renderProgress();
+  if (t === 'home') refreshHome();
+  if (t === 'train') render();
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => tab(b.dataset.tab));
+
+// ===================== BIBLIOTECA =====================
+function lessonOf(skill) {
+  for (const [jid, j] of Object.entries(JOURNEYS)) { const i = j.lessons.findIndex(l => l.skill === skill); if (i >= 0) return `${jid === 'j1' ? 'Jornada 1' : 'Jornada 2'}, aula ${i + 1}`; }
+  return '';
+}
+function demo(k) {
+  const sk = SKILLS[k] || SKILLS.jab;
+  $('demoTitle').textContent = (sk.num ? sk.num + ' · ' : '') + sk.name; $('demoTip').textContent = sk.tip;
+  $('demoErrors').innerHTML = sk.keys.map(x => `<li>✓ ${x}</li>`).join('') + sk.errors.map(x => `<li class="err">✗ ${x}</li>`).join('');
+  $('demoStage').className = 'stage ' + sk.svg;
+  document.querySelectorAll('[data-lib]').forEach(b => b.classList.toggle('selected', b.dataset.lib === k));
+  window.BoxingFit3D && window.BoxingFit3D.demo(k, sk.name, sk.seq, P().stance);
+}
+function renderLibrary() {
+  const groups = ['Golpes', 'Defesa', 'Movimentação'];
+  $('libraryMoves').innerHTML = groups.map(g => `<div class="card"><div class="label">${g}</div>${SKILL_ORDER.filter(s => SKILLS[s].group === g).sort((a, b) => (SKILLS[a].num || 'z').localeCompare(SKILLS[b].num || 'z')).map(s => {
+    const sk = SKILLS[s], ok = data.learned.includes(s);
+    return `<button class="workout" style="margin:8px 0;width:100%" data-lib="${s}"><span>${sk.num ? sk.num + ' · ' : ''}${sk.name}<small>${ok ? '✓ aprendido' : '🔒 ' + lessonOf(s)}</small></span><span>Ver ›</span></button>`;
+  }).join('')}</div>`).join('');
+  document.querySelectorAll('[data-lib]').forEach(b => b.onclick = () => { demo(b.dataset.lib); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+}
+const demoSVG = $('stage').querySelector('svg').cloneNode(true);
+$('demoStage').replaceChild(demoSVG, $('demoStage').querySelector('svg'));
+renderLibrary(); demo('jab');
+
+// ===================== CONQUISTAS =====================
+const BADGES = [
+  { id: 'first', icon: '🥊', name: 'Primeiro treino', test: () => data.history.length >= 1 },
+  { id: 'onetwo', icon: '👊', name: 'Um-dois', test: () => data.learned.includes('jab') && data.learned.includes('cross') },
+  { id: 'week', icon: '📅', name: 'Semana completa', test: () => weekComplete() },
+  { id: 'streak5', icon: '🔥', name: '5 treinos seguidos', test: () => streak() >= 5 },
+  { id: 'defense', icon: '🛡️', name: 'Defesa em dia', test: () => ['slip', 'block', 'roll'].every(s => data.learned.includes(s)) },
+  { id: 'arsenal', icon: '💥', name: 'Golpes de 1 a 6', test: () => ['jab', 'cross', 'lhook', 'rhook', 'uppercut'].every(s => data.learned.includes(s)) },
+  { id: 'calls100', icon: '🗣️', name: '100 combinações', test: () => (data.callsTotal || 0) >= 100 },
+  { id: 'min300', icon: '⏱️', name: '300 minutos', test: () => data.history.reduce((a, x) => a + x.seconds, 0) >= 300 * 60 },
+  { id: 'j1', icon: '🏆', name: 'Jornada 1 concluída', test: () => data.journey.id !== 'j1' },
+  { id: 'j2', icon: '👑', name: 'Jornada 2 concluída', test: () => data.journey.id === 'free' },
+];
+function weekComplete() {
+  for (let w = 0; w < 26; w++) {
+    const ws = new Date(weekStart().getTime() - w * 7 * DAY); let ok = true, any = false;
+    for (let i = 0; i < 7; i++) { const d = new Date(ws.getTime() + i * DAY); if (d > new Date()) { ok = false; break; } if (isPlanDay(d)) { any = true; if (!doneOn(d)) ok = false; } }
+    if (any && ok) return true;
+  }
+  return false;
+}
+function newBadges() { data.badges ||= []; const got = BADGES.filter(b => !data.badges.includes(b.id) && b.test()); got.forEach(b => data.badges.push(b.id)); return got; }
+
+// ===================== EVOLUÇÃO =====================
+function renderProgress() {
+  const p = P();
+  $('sessions').textContent = data.history.length;
+  $('minutes').textContent = Math.round(data.history.reduce((a, x) => a + x.seconds, 0) / 60);
+  const kc = data.history.reduce((a, x) => a + (x.kcal || 0), 0);
+  $('kcal').textContent = p.weightKg ? kc : '–'; $('kcalLabel').textContent = p.weightKg ? 'kcal estimadas' : 'informe o peso';
+  $('skillCount').textContent = `${lessonsDone()} / ${SKILL_ORDER.length}`;
+  $('skillGrid').innerHTML = SKILL_ORDER.map(s => `<div class="sk ${data.learned.includes(s) ? 'on' : ''}"><b>${data.learned.includes(s) ? (SKILLS[s].num || '✓') : '🔒'}</b><small>${SKILLS[s].name}</small></div>`).join('');
+  data.badges ||= [];
+  $('badgeGrid').innerHTML = BADGES.map(b => `<div class="bdg ${data.badges.includes(b.id) ? 'on' : ''}"><b>${b.icon}</b><small>${b.name}</small></div>`).join('');
+  const ws = weekStart(), weeks = [];
+  for (let i = 5; i >= 0; i--) { const a = ws.getTime() - i * 7 * DAY, b = a + 7 * DAY; weeks.push({ a, load: data.history.filter(h => { const t = new Date(h.date).getTime(); return t >= a && t < b; }).reduce((s, h) => s + (h.load || Math.round(h.seconds / 60 * 5)), 0) }); }
+  const max = Math.max(1, ...weeks.map(w => w.load));
+  $('loadBars').innerHTML = weeks.map((w, i) => `<div class="bar"><i style="height:${Math.round(w.load / max * 100)}%"></i><b>${w.load || ''}</b><small>${i === 5 ? 'atual' : new Date(w.a).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}</small></div>`).join('');
+  const prev = weeks[4].load, cur = weeks[5].load;
+  $('loadNote').textContent = prev && cur > prev * 1.3 ? `⚠ Esta semana está ${Math.round((cur / prev - 1) * 100)}% acima da anterior. Segure o volume até o fim da semana.` : cur ? 'Carga sob controle.' : 'Nenhum treino nesta semana ainda.';
+  $('totalDone').textContent = data.history.length + ' sessões';
+  $('history').innerHTML = data.history.length ? data.history.slice(0, 40).map(x => `<li>${new Date(x.date).toLocaleDateString('pt-BR')} · ${x.name} · ${Math.round(x.seconds / 60)} min${x.rpe ? ` · esforço ${x.rpe}` : ''}${x.calls ? ` · ${x.calls} combinações` : ''}${x.pains && x.pains.length ? ` · dor: ${x.pains.map(k => LIMITS[k]).join(', ')}` : ''}</li>`).join('') : '<li>Nenhum treino concluído ainda.</li>';
+  ['voice', 'sound', 'vibration'].forEach(id => $(id).checked = data.preferences[id]);
+  $('planSummary').innerHTML = `<b>${GOALS[p.goal]}</b> · ${EXPS[p.exp]}<br>${p.days.length}x por semana (${p.days.slice().sort((a, b) => ((a + 6) % 7) - ((b + 6) % 7)).map(d => DOW[d]).join(', ')}) · ${p.minutes} min · base ${p.stance === 'southpaw' ? 'canhota' : 'ortodoxa'}${p.heightCm ? ` · ${p.heightCm} cm` : ''}${p.weightKg ? ` · ${p.weightKg} kg` : ''}`;
+  const recent = Object.entries(data.pains).filter(([, t]) => Date.now() - t < 7 * DAY).map(([k]) => k);
+  $('limitChips').innerHTML = recent.length ? recent.map(k => `<span class="chip on">${LIMITS[k]} · dor recente</span>`).join('') + '<button class="chip" id="clearPains">Dores resolvidas</button>' : '';
+  const cp = $('clearPains'); if (cp) cp.onclick = () => { data.pains = {}; save(); renderProgress(); toast('Dores removidas. Treinos voltam ao normal.'); };
+}
+['voice', 'sound', 'vibration'].forEach(id => $(id).onchange = e => { data.preferences[id] = e.target.checked; save(); });
+$('clearHistory').onclick = () => { if (confirm('Apagar todo o histórico de treinos?')) { data.history = []; save(); renderProgress(); refreshHome(); } };
+$('redoQuiz').onclick = () => openQuiz();
+
+// ===================== QUESTIONÁRIO INICIAL =====================
+let qa, qi;
+const QUIZ = [
+  { id: 'name', q: 'Como você quer ser chamado?', type: 'text', ph: 'Seu nome' },
+  { id: 'goal', q: 'Qual é o seu principal objetivo com o boxe?', type: 'one', opts: Object.entries(GOALS) },
+  { id: 'exp', q: 'Qual é a sua experiência com boxe?', type: 'one', opts: Object.entries(EXPS) },
+  { id: 'stance', q: 'Qual é a sua mão dominante?', type: 'one', opts: [['orthodox', 'Direita · base ortodoxa (pé esquerdo à frente)'], ['southpaw', 'Esquerda · base canhota (pé direito à frente)']] },
+  { id: 'days', q: 'Em quais dias você quer treinar?', sub: 'Recomendado: 3 dias, com descanso entre eles.', type: 'days' },
+  { id: 'minutes', q: 'Quanto tempo por treino?', type: 'one', opts: [['10', '10 minutos'], ['20', '20 minutos'], ['30', '30 minutos']] },
+  { id: 'body', q: 'Altura e peso', sub: 'Opcional. Ajusta dicas de técnica e a estimativa de calorias.', type: 'body' },
+  { id: 'limits', q: 'Algum cuidado com o corpo?', sub: 'O plano evita movimentos que forçam essas regiões.', type: 'many', opts: Object.entries(LIMITS) },
+  { id: 'result', type: 'result' },
+];
+const sortDays = arr => arr.slice().sort((a, b) => ((a + 6) % 7) - ((b + 6) % 7));
+function openQuiz() {
+  const p = P();
+  qa = { name: p.name, goal: p.goal, exp: p.exp, stance: p.stance, days: p.days.slice(), minutes: String(p.minutes), heightCm: p.heightCm, weightKg: p.weightKg, limits: { ...p.limits } };
+  qi = 0; $('quiz').classList.remove('hidden'); renderQuiz();
+}
+function renderQuiz() {
+  const s = QUIZ[qi]; $('qBar').style.width = `${(qi + 1) / QUIZ.length * 100}%`; $('qBack').style.visibility = qi ? 'visible' : 'hidden';
+  let h = s.q ? `<h1 class="hero" style="font-size:27px">${s.q}</h1>${s.sub ? `<p class="muted small">${s.sub}</p>` : ''}` : '';
+  if (s.type === 'text') h += `<div class="form"><input id="qText" maxlength="30" placeholder="${s.ph}" value="${(qa.name || '').replace(/"/g, '')}"></div><button style="width:100%;margin-top:16px" id="qNext">Continuar</button>`;
+  if (s.type === 'one') h += `<div class="qopts">${s.opts.map(([v, t]) => `<button class="qopt ${String(qa[s.id]) === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>`;
+  if (s.type === 'days') h += `<div class="qdays">${[1, 2, 3, 4, 5, 6, 0].map(d => `<button class="qday ${qa.days.includes(d) ? 'on' : ''}" data-d="${d}">${DOW[d]}</button>`).join('')}</div><p class="small muted" id="qDaysTxt"></p><button style="width:100%;margin-top:12px" id="qNext">Continuar</button>`;
+  if (s.type === 'body') h += `<div class="form"><label>Altura (cm)<input id="qH" type="number" inputmode="numeric" min="130" max="230" value="${qa.heightCm || ''}"></label><label>Peso (kg)<input id="qW" type="number" inputmode="decimal" min="35" max="250" value="${qa.weightKg || ''}"></label></div><button style="width:100%;margin-top:16px" id="qNext">Continuar</button>`;
+  if (s.type === 'many') h += `<div class="qopts">${s.opts.map(([v, t]) => `<button class="qopt ${qa.limits[v] ? 'on' : ''}" data-m="${v}">${t}</button>`).join('')}<button class="qopt ${!Object.values(qa.limits).some(Boolean) ? 'on' : ''}" data-m="none">Nenhum</button></div><button style="width:100%;margin-top:12px" id="qNext">Continuar</button>`;
+  if (s.type === 'result') {
+    const startAt = qa.exp === 'regular' && data.journey.id === 'j1' && data.journey.lesson === 0 ? 4 : (data.journey.id === 'j1' ? data.journey.lesson : 0);
+    const left = JOURNEYS.j1.lessons.length - startAt, perWeek = qa.days.length, weeks = Math.ceil(left / perWeek);
+    const end = new Date(Date.now() + weeks * 7 * DAY);
+    h = `<div class="label">Seu plano está pronto</div><h1 class="hero" style="font-size:28px">${qa.name ? qa.name + ', você' : 'Você'} vai aprender shadow boxing em ${weeks} ${weeks === 1 ? 'semana' : 'semanas'}.</h1>
+      <div class="card"><p class="small"><b>Jornada:</b> Aprenda Shadow Boxing · ${left} aulas${startAt === 4 && qa.exp === 'regular' ? ' (as 4 primeiras foram puladas pela sua experiência)' : ''}</p>
+      <p class="small"><b>Ritmo:</b> ${perWeek}x por semana (${sortDays(qa.days).map(d => DOW[d]).join(', ')}), ${qa.minutes} min por treino</p>
+      <p class="small"><b>Foco:</b> ${GOALS[qa.goal]}${qa.goal === 'tecnica' ? ': rounds com mais tempo de técnica' : qa.goal === 'estresse' ? ': ritmo constante, sem explosões' : ': explosão no fim dos rounds'}</p>
+      <p class="small"><b>Previsão de conclusão:</b> ${end.toLocaleDateString('pt-BR')}</p>
+      <p class="small" style="margin-bottom:0"><b>Você vai aprender:</b> ${SKILL_ORDER.slice(0, 9).map(x => SKILLS[x].name).join(', ')}.</p></div>
+      <button style="width:100%;margin-top:16px" id="qDone">Começar meu plano →</button>`;
+  }
+  $('qBody').innerHTML = h;
+  document.querySelectorAll('.qopt[data-v]').forEach(b => b.onclick = () => { qa[s.id] = b.dataset.v; qi++; renderQuiz(); });
+  document.querySelectorAll('.qopt[data-m]').forEach(b => b.onclick = () => {
+    if (b.dataset.m === 'none') qa.limits = {}; else qa.limits[b.dataset.m] = !qa.limits[b.dataset.m];
+    document.querySelectorAll('.qopt[data-m]').forEach(x => x.classList.toggle('on', x.dataset.m === 'none' ? !Object.values(qa.limits).some(Boolean) : !!qa.limits[x.dataset.m]));
+  });
+  const daysTxt = () => { const t = $('qDaysTxt'); if (!t) return; const n = qa.days.length; t.textContent = n < 2 ? 'Escolha pelo menos 2 dias.' : n > 4 ? 'Mais de 4 dias deixa pouco tempo para o corpo assimilar: considere 3.' : `${n} dias por semana.`; $('qNext').disabled = n < 2; };
+  document.querySelectorAll('.qday').forEach(b => b.onclick = () => { const d = +b.dataset.d, i = qa.days.indexOf(d); i >= 0 ? qa.days.splice(i, 1) : qa.days.push(d); b.classList.toggle('on', i < 0); daysTxt(); });
+  daysTxt();
+  const nx = $('qNext'); if (nx) nx.onclick = () => {
+    if (s.type === 'text') qa.name = $('qText').value.trim();
+    if (s.type === 'body') { qa.heightCm = +$('qH').value || null; qa.weightKg = +$('qW').value || null; }
+    qi++; renderQuiz();
+  };
+  const dn = $('qDone'); if (dn) dn.onclick = () => {
+    const firstTime = !P().onboarded;
+    data.profile = { ...P(), name: qa.name, goal: qa.goal, exp: qa.exp, stance: qa.stance, days: qa.days, minutes: +qa.minutes, heightCm: qa.heightCm, weightKg: qa.weightKg, limits: qa.limits, onboarded: true };
+    if (qa.exp === 'regular' && data.journey.id === 'j1' && data.journey.lesson === 0) { data.journey.lesson = 4; ['guard', 'jab', 'cross', 'steps'].forEach(x => data.learned.includes(x) || data.learned.push(x)); }
+    save(); $('quiz').classList.add('hidden'); if (!started) { current = { kind: 'lesson' }; resetSession(); } renderLibrary(); refreshHome(); tab('home');
+    if (firstTime) toast('Plano criado! Sua primeira aula está no topo da tela.');
+  };
+}
+$('qBack').onclick = () => { if (qi > 0) { qi--; renderQuiz(); } };
+
+// ===================== BACKUP =====================
+$('exportBackup').onclick = () => {
+  checkpoint();
+  const blob = new Blob([JSON.stringify({ app: 'boxing-fit', version: 5, exportedAt: new Date().toISOString(), data }, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = url; a.download = 'boxing-fit-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1500);
+};
+$('importBackup').onclick = () => $('backupFile').click();
+$('backupFile').onchange = async e => {
+  const f = e.target.files?.[0]; if (!f) return;
+  try {
+    if (f.size > 2e6) throw Error('Arquivo muito grande');
+    const obj = JSON.parse(await f.text());
+    if (obj.app !== 'boxing-fit' || !obj.data || !Array.isArray(obj.data.history) || !obj.data.preferences || typeof obj.data.start !== 'number') throw Error('Formato inválido');
+    if (!confirm('Restaurar este backup? O histórico atual será substituído.')) return;
+    pause(); data = { ...obj.data }; migrate(); if (!save()) throw Error('Falha ao salvar no navegador');
+    resetSession(); restoreSession(); renderLibrary(); refreshHome(); renderProgress(); alert('Backup restaurado com sucesso.');
+  } catch (err) { alert('Não foi possível restaurar: ' + err.message); } finally { e.target.value = ''; }
+};
+window.addEventListener('pagehide', () => { if (running) pause(); else checkpoint(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden && running) pause(); });
+
+restoreSession();
+refreshHome();
+render();
+if (!P().onboarded) openQuiz();
 
 // Articulated coach: coordinated feet, knees, hips, torso, head, shoulders and hands.
 (function(){
@@ -74,7 +950,7 @@ const ids=['legBack','legFront','shoeBack','shoeFront','body','armBack','armFron
 const el=Object.fromEntries(ids.map(id=>[id,svg.querySelector('#'+id)]));
 const lerp=(a,b,t)=>a+(b-a)*t;
 function frame(now){
-const mode=(stage.className.match(/\\b(jab|direct|hook|slip|step|squat|march|combo|rest)\\b/)||[])[0]||'rest';
+const mode=(stage.className.match(/\b(jab|direct|hook|slip|step|squat|march|combo|rest)\b/)||[])[0]||'rest';
 const speed=mode==='rest'?.55:mode==='combo'?1.25:1;
 const t=now/1000*speed;
 const beat=(Math.sin(t*2*Math.PI)+1)/2;
@@ -112,4 +988,7 @@ requestAnimationFrame(frame)
 requestAnimationFrame(frame);
 })();
 
-</script><script>if('serviceWorker' in navigator && location.protocol==='https:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}</script></body></html>
+
+</script>
+<script>if('serviceWorker' in navigator && location.protocol==='https:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}</script>
+</body></html>

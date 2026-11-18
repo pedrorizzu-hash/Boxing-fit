@@ -1,0 +1,350 @@
+{
+ "version": 1,
+ "model": "assets/coach.glb",
+ "stance": "orthodox",
+ "fps": 30,
+ "idleClip": "idle",
+ "notes": "Coordenadas de rootMotion no espaço local do treinador (three.js, Y para cima, frente = +Z). yaw em radianos.",
+ "aliases": {
+  "direto": "cross",
+  "jabDireto": "cross",
+  "hook": "leftHook",
+  "uppercut": "rightUppercut",
+  "esquivaEsquerda": "slipLeft",
+  "esquivaDireita": "slipRight",
+  "rolagem": "rollLeft",
+  "bloqueio": "blockHigh",
+  "saidaLateral": "stepLeft",
+  "saida": "pivotLeft",
+  "pivo": "pivotLeft",
+  "trocaDeNivel": "levelChange",
+  "sprawl": "sprawlLite"
+ },
+ "moves": {
+  "jab": {
+   "clip": "jab",
+   "label": "Jab",
+   "type": "strike",
+   "duration": 0.4333,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "cross": {
+   "clip": "cross",
+   "label": "Direto",
+   "type": "strike",
+   "duration": 0.5333,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "leftHook": {
+   "clip": "leftHook",
+   "label": "Cruzado de esquerda",
+   "type": "strike",
+   "duration": 0.5667,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "rightHook": {
+   "clip": "rightHook",
+   "label": "Cruzado de direita",
+   "type": "strike",
+   "duration": 0.5667,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "leftUppercut": {
+   "clip": "leftUppercut",
+   "label": "Uppercut de esquerda",
+   "type": "strike",
+   "duration": 0.5333,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "rightUppercut": {
+   "clip": "rightUppercut",
+   "label": "Uppercut de direita",
+   "type": "strike",
+   "duration": 0.5667,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "slipLeft": {
+   "clip": "slipLeft",
+   "label": "Esquiva para a esquerda",
+   "type": "defense",
+   "duration": 0.5,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "slipRight": {
+   "clip": "slipRight",
+   "label": "Esquiva para a direita",
+   "type": "defense",
+   "duration": 0.5,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "rollLeft": {
+   "clip": "rollLeft",
+   "label": "Rolagem para a esquerda",
+   "type": "defense",
+   "duration": 0.6333,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "rollRight": {
+   "clip": "rollRight",
+   "label": "Rolagem para a direita",
+   "type": "defense",
+   "duration": 0.6333,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "blockHigh": {
+   "clip": "blockHigh",
+   "label": "Bloqueio alto",
+   "type": "defense",
+   "duration": 0.5667,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "guard": {
+   "clip": "guard",
+   "label": "Retorno à guarda",
+   "type": "defense",
+   "duration": 0.4667,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "idle": {
+   "clip": "idle",
+   "label": "Base",
+   "type": "footwork",
+   "duration": 1.0,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "stepForward": {
+   "clip": "stepForward",
+   "label": "Passo à frente",
+   "type": "footwork",
+   "duration": 0.5333,
+   "rootMotion": {
+    "x": 0.0,
+    "z": 0.22,
+    "yaw": 0
+   }
+  },
+  "stepBack": {
+   "clip": "stepBack",
+   "label": "Passo para trás",
+   "type": "footwork",
+   "duration": 0.5333,
+   "rootMotion": {
+    "x": 0.0,
+    "z": -0.22,
+    "yaw": 0
+   }
+  },
+  "stepLeft": {
+   "clip": "stepLeft",
+   "label": "Deslocamento para a esquerda",
+   "type": "footwork",
+   "duration": 0.5333,
+   "rootMotion": {
+    "x": 0.22,
+    "z": -0.0,
+    "yaw": 0
+   }
+  },
+  "stepRight": {
+   "clip": "stepRight",
+   "label": "Deslocamento para a direita",
+   "type": "footwork",
+   "duration": 0.5333,
+   "rootMotion": {
+    "x": -0.22,
+    "z": -0.0,
+    "yaw": 0
+   }
+  },
+  "pivotLeft": {
+   "clip": "pivotLeft",
+   "label": "Pivô para a esquerda",
+   "type": "strike",
+   "duration": 0.4667,
+   "rootMotion": {
+    "x": -0.2417,
+    "z": 0.1696,
+    "yaw": 0.8727
+   }
+  },
+  "pivotRight": {
+   "clip": "pivotRight",
+   "label": "Pivô para a direita",
+   "type": "strike",
+   "duration": 0.4667,
+   "rootMotion": {
+    "x": 0.2853,
+    "z": 0.0762,
+    "yaw": -0.8727
+   }
+  },
+  "recoverBalance": {
+   "clip": "recoverBalance",
+   "label": "Recuperação de equilíbrio",
+   "type": "footwork",
+   "duration": 0.6333,
+   "rootMotion": {
+    "x": 0,
+    "z": -0.13,
+    "yaw": 0
+   }
+  },
+  "levelChange": {
+   "clip": "levelChange",
+   "label": "Troca de nível",
+   "type": "bjj",
+   "duration": 0.7333,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  },
+  "sprawlLite": {
+   "clip": "sprawlLite",
+   "label": "Sprawl leve",
+   "type": "bjj",
+   "duration": 0.9333,
+   "rootMotion": {
+    "x": 0,
+    "z": 0,
+    "yaw": 0
+   }
+  }
+ },
+ "combos": [
+  {
+   "id": "c1",
+   "name": "1. Jab, direto",
+   "moves": [
+    "jab",
+    "cross"
+   ]
+  },
+  {
+   "id": "c2",
+   "name": "2. Jab, direto, cruzado",
+   "moves": [
+    "jab",
+    "cross",
+    "leftHook"
+   ]
+  },
+  {
+   "id": "c3",
+   "name": "3. Jab, direto, esquiva, direto",
+   "moves": [
+    "jab",
+    "cross",
+    "slipRight",
+    "cross"
+   ]
+  },
+  {
+   "id": "c4",
+   "name": "4. Jab, uppercut, cruzado, direto",
+   "moves": [
+    "jab",
+    "rightUppercut",
+    "leftHook",
+    "cross"
+   ]
+  },
+  {
+   "id": "c5",
+   "name": "5. Jab, direto, rolagem, cruzado",
+   "moves": [
+    "jab",
+    "cross",
+    "rollRight",
+    "leftHook"
+   ]
+  },
+  {
+   "id": "c6",
+   "name": "6. Jab, direto, cruzado, direto, esquiva, saída lateral",
+   "moves": [
+    "jab",
+    "cross",
+    "leftHook",
+    "cross",
+    "slipRight",
+    "stepLeft"
+   ]
+  },
+  {
+   "id": "c7",
+   "name": "7. Esquiva, direto, cruzado, saída lateral",
+   "moves": [
+    "slipRight",
+    "cross",
+    "leftHook",
+    "stepLeft"
+   ]
+  },
+  {
+   "id": "c8",
+   "name": "8. Jab, direto, uppercut, cruzado, direto, saída",
+   "moves": [
+    "jab",
+    "cross",
+    "leftUppercut",
+    "leftHook",
+    "cross",
+    "pivotLeft"
+   ]
+  }
+ ]
+}
