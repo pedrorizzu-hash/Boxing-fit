@@ -76,6 +76,10 @@
 .qday{padding:14px 0;background:#192231;border:2px solid #2a3649;color:#f5f7fc;font-size:13px}
 .qday.on{border-color:#ffc94e;background:#ffc94e;color:#12151d}
 .form input{width:100%}
+.badge.good{background:#2c5a3a;color:#d6f5c9}.badge.bad{background:#7c2a2a;color:#ffd7d3}
+details.note summary{cursor:pointer;color:#cbd3e1;font-size:13px;margin-top:6px}
+details.note ol{padding-left:18px;line-height:1.55}
+details.note code{background:#0f1622;padding:1px 5px;border-radius:5px}
 
 .day.planned{border-color:#364155}
 </style><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./icon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Boxing Fit"><script type="importmap">{"imports":{"three":"./boxing-coach-3d/vendor/three.module.min.js","three/addons/":"./boxing-coach-3d/vendor/addons/"}}</script>
@@ -207,6 +211,26 @@
     <button class="alt" style="width:100%;margin-top:10px" id="redoQuiz">Refazer o questionário</button>
   </div>
 
+  <div class="card" id="sheetsCard">
+    <div class="row"><span class="label">Google Sheets</span><span class="badge" id="syncBadge">desconectado</span></div>
+    <p class="muted small">Cada treino concluído vira uma linha na sua planilha. Assim o Claude consegue ler seu progresso direto do Google Drive e avaliar sua evolução.</p>
+    <div class="form">
+      <label>URL do app da Web (Apps Script)<input id="sUrl" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"></label>
+      <label>Chave de segurança<div class="row" style="gap:8px"><input id="sKey" style="flex:1" autocomplete="off"><button class="alt" id="sGen" style="padding:10px 12px">Gerar</button><button class="alt" id="sCopy" style="padding:10px 12px">Copiar</button></div></label>
+    </div>
+    <div class="actions" style="margin-top:12px"><button id="sSave">Salvar e testar</button><button class="alt" id="sAll">Enviar histórico</button></div>
+    <p class="small" id="syncStatus"></p>
+    <details class="note"><summary>Como configurar (5 minutos, uma vez)</summary>
+      <ol>
+        <li>Toque em <b>Gerar</b> e depois em <b>Copiar</b>.</li>
+        <li>Abra a planilha <b>Boxing Fit · Progresso</b> no Google Drive, de preferência num computador.</li>
+        <li>Menu <b>Extensões → Apps Script</b>. Apague o conteúdo, cole o código do arquivo <code>Code.gs</code> e troque <code>COLE_AQUI_A_CHAVE_DO_APP</code> pela chave copiada.</li>
+        <li><b>Implantar → Nova implantação → App da Web</b>. Executar como: <b>Eu</b>. Quem pode acessar: <b>Qualquer pessoa</b>. Autorize o acesso.</li>
+        <li>Copie a URL que termina em <code>/exec</code>, cole aqui e toque em <b>Salvar e testar</b>. Depois, <b>Enviar histórico</b>.</li>
+      </ol>
+    </details>
+  </div>
+
   <div class="card">
     <div class="label">Preferências</div>
     <label class="toggle"><input type="checkbox" id="voice" checked> Orientações e combinações por voz</label>
@@ -272,6 +296,7 @@ function migrate() {
   }
   data.profile = { ...defaultProfile(), ...data.profile };
   data.pains ||= {}; data.learned ||= []; data.journey ||= { id: 'j1', lesson: 0 };
+  data.sync ||= { url: '', key: '', queue: [], last: null, ok: null };
 }
 migrate();
 const save = () => {
@@ -720,7 +745,7 @@ function kcalFor(st) {
 $('saveFinish').onclick = () => {
   const seconds = steps.reduce((a, s) => a + s.time, 0), rpe = fin.rpe, pains = [...fin.pains];
   const L = current.kind === 'lesson' ? currentLesson() : null;
-  const entry = { date: new Date().toISOString(), kind: current.kind, name: workoutName(), seconds, rpe, pains, load: Math.round(seconds / 60 * rpe), kcal: kcalFor(steps), calls: callsThisSession, journey: data.journey.id, lesson: L ? lessonIdx() : null };
+  const entry = { date: new Date().toISOString(), kind: current.kind, name: workoutName(), seconds, rpe, pains, load: Math.round(seconds / 60 * rpe), kcal: kcalFor(steps), calls: callsThisSession, journey: data.journey.id, lesson: L ? lessonIdx() : null, learnedNow: L && L.skill && !data.learned.includes(L.skill) ? L.skill : null, stance: P().stance, goal: P().goal };
   data.history.unshift(entry); data.callsTotal = (data.callsTotal || 0) + callsThisSession;
   pains.forEach(k => data.pains[k] = Date.now());
   // intensidade se ajusta pelo esforço: esforço 9+ ou dor alivia; dois treinos fáceis seguidos endurecem
@@ -741,7 +766,9 @@ $('saveFinish').onclick = () => {
   else if (data.bias > 0) msg += ' Dois treinos fáceis seguidos: o próximo vem mais intenso.';
   if (pains.length) msg += ` Dor registrada (${pains.map(k => LIMITS[k].toLowerCase()).join(', ')}): os próximos 7 dias vêm adaptados.`;
   newBadges().forEach(b => msg += ` Nova conquista: ${b.icon} ${b.name}.`);
-  data.session = null; save();
+  entry.learnedCount = data.learned.length; entry.streak = streak();
+  if (data.sync.url) data.sync.queue.push(entry.date);
+  data.session = null; save(); syncNow();
   $('finishModal').classList.add('hidden');
   current = { kind: 'lesson' };
   resetSession(); renderLibrary(); refreshHome(); tab('home'); toast(msg);
@@ -843,6 +870,7 @@ function renderProgress() {
   $('totalDone').textContent = data.history.length + ' sessões';
   $('history').innerHTML = data.history.length ? data.history.slice(0, 40).map(x => `<li>${new Date(x.date).toLocaleDateString('pt-BR')} · ${x.name} · ${Math.round(x.seconds / 60)} min${x.rpe ? ` · esforço ${x.rpe}` : ''}${x.calls ? ` · ${x.calls} combinações` : ''}${x.pains && x.pains.length ? ` · dor: ${x.pains.map(k => LIMITS[k]).join(', ')}` : ''}</li>`).join('') : '<li>Nenhum treino concluído ainda.</li>';
   ['voice', 'sound', 'vibration'].forEach(id => $(id).checked = data.preferences[id]);
+  renderSync();
   $('planSummary').innerHTML = `<b>${GOALS[p.goal]}</b> · ${EXPS[p.exp]}<br>${p.days.length}x por semana (${p.days.slice().sort((a, b) => ((a + 6) % 7) - ((b + 6) % 7)).map(d => DOW[d]).join(', ')}) · ${p.minutes} min · base ${p.stance === 'southpaw' ? 'canhota' : 'ortodoxa'}${p.heightCm ? ` · ${p.heightCm} cm` : ''}${p.weightKg ? ` · ${p.weightKg} kg` : ''}`;
   const recent = Object.entries(data.pains).filter(([, t]) => Date.now() - t < 7 * DAY).map(([k]) => k);
   $('limitChips').innerHTML = recent.length ? recent.map(k => `<span class="chip on">${LIMITS[k]} · dor recente</span>`).join('') + '<button class="chip" id="clearPains">Dores resolvidas</button>' : '';
@@ -851,6 +879,77 @@ function renderProgress() {
 ['voice', 'sound', 'vibration'].forEach(id => $(id).onchange = e => { data.preferences[id] = e.target.checked; save(); });
 $('clearHistory').onclick = () => { if (confirm('Apagar todo o histórico de treinos?')) { data.history = []; save(); renderProgress(); refreshHome(); } };
 $('redoQuiz').onclick = () => openQuiz();
+
+
+// ===================== GOOGLE SHEETS =====================
+// Envia cada treino para uma planilha (Apps Script). Sem servidor: fila local, reenvio automático.
+const SYNC_COLS = (h) => {
+  const d = new Date(h.date);
+  return {
+    id: h.date, data: d.toISOString().slice(0, 10), hora: d.toTimeString().slice(0, 5),
+    tipo: h.kind || 'antigo', treino: h.name, jornada: h.journey === 'j1' ? 'Aprenda Shadow Boxing' : h.journey === 'j2' ? 'Intermediário' : (h.journey || ''),
+    aula: h.lesson !== null && h.lesson !== undefined ? h.lesson + 1 : '', 'golpe aprendido': h.learnedNow ? SKILLS[h.learnedNow]?.name || h.learnedNow : '',
+    minutos: Math.round(h.seconds / 60), 'esforço (1-10)': h.rpe || '', carga: h.load || '', 'combinações chamadas': h.calls || 0,
+    dores: (h.pains || []).map(k => LIMITS[k]).join(', '), 'kcal estimadas': h.kcal || '',
+    'golpes aprendidos (total)': h.learnedCount ?? '', 'sequência': h.streak ?? '', base: h.stance === 'southpaw' ? 'canhota' : 'ortodoxa', objetivo: GOALS[h.goal] || '',
+  };
+};
+function profileSnapshot() {
+  const p = P(), j = journey();
+  return {
+    nome: p.name, objetivo: GOALS[p.goal], experiencia: EXPS[p.exp], base: p.stance === 'southpaw' ? 'canhota' : 'ortodoxa',
+    'dias de treino': sortDays(p.days).map(d => DOWL[d]), 'minutos por treino': p.minutes, 'altura (cm)': p.heightCm || '', 'peso (kg)': p.weightKg || '',
+    'cuidados permanentes': Object.keys(p.limits).filter(k => p.limits[k]).map(k => LIMITS[k]),
+    'dores ativas (7 dias)': Object.entries(data.pains).filter(([, t]) => Date.now() - t < 7 * DAY).map(([k]) => LIMITS[k]),
+    jornada: j ? j.name : 'Jornadas concluídas', 'próxima aula': currentLesson() ? `${lessonIdx() + 1}. ${currentLesson().title}` : '-',
+    'golpes aprendidos': data.learned.map(s => SKILLS[s].name), 'treinos concluídos': data.history.length,
+    'minutos totais': Math.round(data.history.reduce((a, x) => a + x.seconds, 0) / 60), 'sequência atual': streak(),
+    'ajuste de intensidade': data.bias > 0 ? 'mais intenso' : data.bias < 0 ? 'mais leve' : 'normal',
+    'atualizado em': new Date().toLocaleString('pt-BR'),
+  };
+}
+function syncStatus(t, ok) {
+  const el = $('syncStatus'); if (el) el.textContent = t;
+  const b = $('syncBadge'); if (b) { b.textContent = !data.sync.url ? 'desconectado' : ok === false ? 'com erro' : data.sync.queue.length ? `${data.sync.queue.length} na fila` : 'conectado'; b.className = 'badge ' + (ok === false ? 'bad' : data.sync.url ? 'good' : ''); }
+}
+let syncing = false;
+async function post(body) {
+  const res = await fetch(data.sync.url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ chave: data.sync.key, ...body }), redirect: 'follow' });
+  const out = await res.json();
+  if (!out.ok) throw Error(out.erro || 'falha');
+  return out;
+}
+async function syncNow(all = false) {
+  if (!data.sync.url || !data.sync.key || syncing) return;
+  if (!all && !data.sync.queue.length) return;
+  syncing = true; syncStatus('Enviando…');
+  try {
+    const treinos = (all ? data.history : data.history.filter(h => data.sync.queue.includes(h.date))).map(SYNC_COLS);
+    const out = await post({ acao: 'treinos', treinos, perfil: profileSnapshot() });
+    data.sync.queue = []; data.sync.last = Date.now(); data.sync.ok = true; save();
+    syncStatus(`✓ ${out.adicionados} treino(s) enviado(s) · ${new Date().toLocaleTimeString('pt-BR')}`, true);
+  } catch (e) {
+    data.sync.ok = false; save();
+    syncStatus(`Não foi possível enviar agora (${e.message}). Os treinos ficam na fila e são reenviados depois.`, false);
+  } finally { syncing = false; }
+}
+function renderSync() {
+  if (!$('sUrl')) return;
+  $('sUrl').value = data.sync.url || ''; $('sKey').value = data.sync.key || '';
+  syncStatus(data.sync.last ? `Último envio: ${new Date(data.sync.last).toLocaleString('pt-BR')}` : data.sync.url ? 'Conectado, nenhum envio ainda.' : 'Configure para enviar seus treinos para o Google Sheets.', data.sync.ok);
+}
+$('sGen').onclick = () => { const a = new Uint8Array(12); crypto.getRandomValues(a); $('sKey').value = 'bf-' + Array.from(a, x => x.toString(16).padStart(2, '0')).join(''); };
+$('sCopy').onclick = async () => { try { await navigator.clipboard.writeText($('sKey').value); toast('Chave copiada.'); } catch (e) { $('sKey').select(); toast('Selecione e copie a chave manualmente.'); } };
+$('sSave').onclick = async () => {
+  const url = $('sUrl').value.trim(), k = $('sKey').value.trim();
+  if (!/^https:\/\/script\.google(usercontent)?\.com\//.test(url)) { syncStatus('A URL deve começar com https://script.google.com/', false); return; }
+  if (k.length < 8) { syncStatus('Gere uma chave primeiro.', false); return; }
+  data.sync.url = url; data.sync.key = k; save(); syncStatus('Testando conexão…');
+  try { await post({ acao: 'ping' }); data.sync.ok = true; save(); syncStatus('✓ Conectado à planilha. Toque em "Enviar histórico" para mandar os treinos antigos.', true); syncNow(); }
+  catch (e) { data.sync.ok = false; save(); syncStatus(`Falhou: ${e.message}. Confira a URL, a chave no Code.gs e se a implantação está como "Qualquer pessoa".`, false); }
+};
+$('sAll').onclick = () => { if (!data.sync.url) { syncStatus('Salve a URL e a chave primeiro.', false); return; } syncNow(true); };
+window.addEventListener('online', () => syncNow());
 
 // ===================== QUESTIONÁRIO INICIAL =====================
 let qa, qi;
@@ -942,6 +1041,7 @@ restoreSession();
 refreshHome();
 render();
 if (!P().onboarded) openQuiz();
+setTimeout(() => syncNow(), 3000);
 
 // Articulated coach: coordinated feet, knees, hips, torso, head, shoulders and hands.
 (function(){

@@ -5,7 +5,7 @@ Documento para o ChatGPT/Codex executar no repositório `pedrorizzu-hash/Boxing-
 ## O que muda
 
 - `index.html` é **substituído**: app só de boxe no modelo BetterMe. Tem questionário inicial, jornadas de aulas que desbloqueiam golpes, aula do dia, treinos rápidos, monte seu treino, combinações chamadas pelo número só com golpes aprendidos, esforço e dor, sequência, conquistas e base canhota. O método está em `boxing-coach-3d/METODO_DE_TREINO.md`.
-- `sw.js`: cache `boxing-fit-v4` com os arquivos do treinador 3D.
+- `sw.js`: cache `boxing-fit-v5` com os arquivos do treinador 3D.
 - Pasta nova `boxing-coach-3d/`: modelo, animações (22, incluindo troca de nível e sprawl leve), controlador e adaptador.
 - O visual, o backup e o treinador SVG antigo continuam: o SVG é a reserva quando o 3D não carrega.
 
@@ -24,6 +24,16 @@ Não alterar:
 - Não remover o SVG de `#stage` nem o bloco "Articulated coach": é a reserva sem WebGL.
 - `setStage()` reescreve `className` do palco; o adaptador usa o atributo `data-coach3d` por isso.
 - O cronômetro continua baseado em `deadline` (sem desvio quando a tela pausa).
+
+## Sincronização com o Google Sheets
+
+O app envia cada treino concluído para uma planilha do Google por um Apps Script (`boxing-coach-3d/integration/google-sheets/Code.gs`). Assim o Claude lê o progresso pelo conector do Google Drive.
+
+- Configuração em Evolução → Google Sheets: URL do app da Web e uma chave gerada no app, colada também no `Code.gs`.
+- Envio `POST` com `Content-Type: text/plain` (sem preflight de CORS). Corpo: `{ chave, acao: 'ping' | 'treinos', treinos: [...], perfil: {...} }`.
+- Sem conexão, os treinos ficam em `data.sync.queue` e são reenviados na abertura do app ou quando a conexão volta.
+- O script não duplica treinos (coluna `id` = data ISO do treino), ordena por data e reescreve a aba Perfil a cada envio.
+- Abas: Treinos, Perfil e "Leia-me (Claude)", com instruções de avaliação.
 
 ## Contrato entre app e treinador 3D
 
@@ -64,8 +74,9 @@ Comportamento:
 8. Treinos rápidos e "Monte seu treino" liberam depois da aula do jab e só chamam golpes aprendidos.
 9. Base canhota no questionário: o treinador aparece espelhado.
 10. Evolução: golpes aprendidos, conquistas, carga semanal, histórico e calorias (com o peso informado).
-11. Modo avião depois de uma visita: o app abre com o 3D (cache v4).
+11. Modo avião depois de uma visita: o app abre com o 3D (cache v5).
 12. Renomear `boxing-coach-3d/assets/coach.glb`: o app funciona com o SVG, sem erro na tela.
+13. Google Sheets: com a URL e a chave configuradas, "Salvar e testar" mostra "Conectado"; "Enviar histórico" preenche a aba Treinos; um treino novo aparece na planilha sozinho.
 
 ## Prompt para colar no Codex
 
